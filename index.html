@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!--Import Google Icon Font-->
+   <link rel="stylesheet" type="text/css" href="css/reset.css">
+ <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<<<<<<< HEAD
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  </head>
-
-  <body>
-=======
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="css/materialize.css">
 
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
 
   <body>
-<header>
+<header id="pageHeader">
   Smooth Traveler
 </header>
 <div class="container">
@@ -35,11 +33,54 @@
 </div>
 <div></div>
 
+<!-- Bottom panel -->
+<!-- Modal Trigger -->
+<a class="waves-effect waves-light btn modal-trigger blue" href="#modal1">Add</a>
 
->>>>>>> 7808bfd928249d3a570f79086e2065428c9997e9
+<!-- Modal Structure -->
+<div id="modal1" class="modal bottom-sheet">
+  <div class="modal-content">
+    <h4>Add an address </h4>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <input placeholder="Street Address" id="address" type="text" class="validate">
+            <label for="address">Street Address</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input placeholder="City" id="city" type="text" class="validate">
+            <label for="city">City</label>
+          </div>
+          <div class="input-field col s4">
+            <input placeholder="State" id="state" type="text" class="validate">
+            <label for="state">State</label>
+          </div>
+          <div class="input-field col s2">
+            <input placeholder="Zip" id="zip" type="text" class="validate">
+            <label for="zip">Zip</label>
+          </div>
+        </div>
+        </div>
+      </form>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat">Search</a>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/modal-support.js"></script>
+    <script type="text/javascript" src="js/materialize.js"></script>
+
   </body>
 </html>
