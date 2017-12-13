@@ -5,16 +5,33 @@
  <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" type="text/css" href="css/materialize.css">
+=======
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Link css file -->
+    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+>>>>>>> 39437924ec07349b3061709a5256833255db9b9d
 
   </head>
 
   <body>
+<<<<<<< HEAD
+=======
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+>>>>>>> 39437924ec07349b3061709a5256833255db9b9d
 
 
     <!--Let browser know website is optimized for mobile-->
@@ -28,10 +45,31 @@
 <div class="container">
   <div class="row">
     <div class="col s8" id="map"></div>
-    <div class="col s4" id="itemDetails"></div>
+    <div class="col s4" id="itemDetails">
+      <ul class="collapsible" data-collapsible="expandable" id="searchDetails">
+        <li>
+          <div class="collapsible-header"><i class="material-icons">place</i>Luby's</div>
+          <div class="collapsible-body"><span>Address info, Yelp rating, Yelp price</span></div>
+        </li>
+        <!-- <li>
+          <div class="collapsible-header"><i class="material-icons">place</i>Extreme Crossfit</div>
+          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">place</i>Thai Tanic</div>
+          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s8" id="resultsInfo">
+    </div>
+    <div class="col s4" id="musicInfo">
+    </div>
   </div>
 </div>
-<div></div>
 
 <!-- Bottom panel -->
 <!-- Modal Trigger -->
