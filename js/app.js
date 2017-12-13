@@ -1,1 +1,2 @@
-//This is a test comment. 
+// Init map using visitor's geolocation data
+showMap();
