@@ -1,1 +1,2 @@
-// Test2
+// Init map using visitor's geolocation data
+showMap();
