@@ -1,0 +1,24 @@
+body {
+	font-family: 'Libre Franklin', sans-serif;
+	font-size: 16pt;
+	box-sizing: border-box;
+}
+
+h1, h2, h3 {
+	text-align: center;
+	font-family: 'Libre Franklin', sans-serif;
+}
+
+
+#pageHeader {
+	background-color: #2196f3;
+	color: white;
+	font-family: 'Libre Franklin', sans-serif;
+	font-size: 24pt;
+	height: 60px;
+	padding: 10px 10px 10px 10px;
+
+}
+.collapsible-body {
+	background: orange;
+}
