@@ -23,7 +23,6 @@ function saveAddress(addressString) {
 
     let addressParam = addressString.replace(/ /g,"+");
     let APIURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressParam + "&key=AIzaSyASorhGBHbziEDA-7jVhH9zF622rh8gcdc";
-    console.log(APIURL);
     $.get(APIURL).done(function(response){
         storeAddress(response);
     });
@@ -42,7 +41,6 @@ function storeAddress(object) {
             long: object.results[0].geometry.location.lng
         });
         localStorage.setItem("addresses", JSON.stringify(addressArray));
-        console.log(addressArray);
     }
     else {
         let addressArray = [];
@@ -52,7 +50,6 @@ function storeAddress(object) {
             long: object.results[0].geometry.location.lng
         });
         localStorage.setItem("addresses", JSON.stringify(addressArray));
-        console.log(addressArray);
     }
 };
 
