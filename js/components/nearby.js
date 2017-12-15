@@ -1,6 +1,8 @@
 // Zomato API 
-var latitude = 30.266748;
-var longitude = -97.74176;
+function (nearby) {
+
+var latitude = address.lat;
+var longitude = address.lon;
 var nearbyURL = "https://developers.zomato.com/api/v2.1/geocode?lat=" + latitude + "&lon=" + longitude;
 
 $.ajax({
@@ -11,6 +13,12 @@ $.ajax({
 }).done(function(response) {
 
 	for (i = 0; i < 5; i++){
+
+		// Pushing Information into the search details
+		//$(".collapsible-body").html("<li><span><img class='responsive-img' src=" + response.nearby_restaurants[i].restaurant.thumb + "/>" +
+									//"Address: " + response.nearby_restaurants[i].restaurant.location.address +
+									//"User Rating: " + response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating +
+									//"</span></li>");
 
 		console.log(response.nearby_restaurants[i].restaurant);
 		console.log(response.nearby_restaurants[i].restaurant.name);
@@ -28,3 +36,5 @@ $.ajax({
 	}
 
 });
+
+}
