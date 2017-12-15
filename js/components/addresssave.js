@@ -20,11 +20,11 @@ $(document).ready(function() {
 // Takes the autocompleted address, makes a call to Google Maps Geocoder API, 
 // And stores the formatted address string, latitude, and longitude in an 
 // object that is pushed to the addresses array stored in localStorage
-function saveAddress(addressString, label) {
+function saveAddress(addressString, label, isHome) {
     let addressParam = addressString.replace(/ /g,"+");
     let APIURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressParam + "&key=" + GOOGLE_MAPS_KEY;
     $.get(APIURL).done(function(response){
-        storeAddress(response, label);
+        storeAddress(response, label, isHome);
     });
 
 };
@@ -32,15 +32,28 @@ function saveAddress(addressString, label) {
 // Takes the result from the Google Maps Geocoder API and stores it in localStorage
 // IF the addresses array already exists in localStorage (addresses have already been added),
 // That array is pulled down, and the new address is pushed into it, then put back into local Storage
-function storeAddress(object, placelabel) {
+function storeAddress(object, placelabel, isHome) {
     if (localStorage.getItem("addresses")) {
         let addressArray = JSON.parse(localStorage.getItem("addresses"));
-        addressArray.push({
-            address: object.results[0].formatted_address,
-            label: placelabel,
-            lat: object.results[0].geometry.location.lat,
-            long: object.results[0].geometry.location.lng
-        });
+        // If the user has selected the "Home" checkbox, this is added to the BEGINNING of the array
+        if (isHome) {
+            addressArray.unshift({
+                address: object.results[0].formatted_address,
+                label: placelabel,
+                lat: object.results[0].geometry.location.lat,
+                long: object.results[0].geometry.location.lng
+            });
+        }
+        // Else it's added to the END of the Array
+        else {
+            addressArray.push({
+                address: object.results[0].formatted_address,
+                label: placelabel,
+                lat: object.results[0].geometry.location.lat,
+                long: object.results[0].geometry.location.lng
+            });
+        }
+
         localStorage.setItem("addresses", JSON.stringify(addressArray));
     }
     else {
@@ -57,16 +70,16 @@ function storeAddress(object, placelabel) {
 
 // ---------------EVENT LISTENERS-----------------
 
-// When the user clicks the submit button, the address in the field is stored
+// When the user clicks the submit button, the saveAddress function is passed the values for
+// the address, the label, and the boolean of the "Is this your home address" checkbox
 $("#submitAddress").click(function() {
-    saveAddress($("#autocomplete").val(), $("#placelabel").val());
+    saveAddress($("#autocomplete").val(), $("#placelabel").val(), $('#isHome').prop('checked'));
     $("#autocomplete").val('');
     $("#placelabel").val('');
+    $('#isHome').prop('checked', false);
 })
 
-$("#isHome").click(function() {
-    $("#placelabel").val('Home')
-});
+// NEED TO ADD FUNCTION FOR "SAVE" BUTTON WHEN EDITING AN EXISTING ADDRESS
 
 });
 // --------GOOGLE ADDRESS AUTOCOMPLETE FUNCTIONALITY BELOW--------
