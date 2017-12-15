@@ -11,6 +11,7 @@
 async defer></script> */
 
 // Further, there needs to be a search field with the id "autocomplete" for this to work
+// Extra comment
 
 $(document).ready(function() {
 
