@@ -1,2 +1,4 @@
 .DS_Store
 /js/config.js
+*.sublime-project
+*.sublime-workspace
