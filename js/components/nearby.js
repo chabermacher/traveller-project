@@ -15,10 +15,10 @@ $.ajax({
 	for (i = 0; i < 5; i++){
 
 		// Pushing Information into the search details
-		$(".collapsible-body").html("<li><span><img class='responsive-img' src=" + response.nearby_restaurants[i].restaurant.thumb + "/>" +
-									"Address: " + response.nearby_restaurants[i].restaurant.location.address +
-									"User Rating: " + response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating +
-									"</span></li>");
+		//$(".collapsible-body").html("<li><span><img class='responsive-img' src=" + response.nearby_restaurants[i].restaurant.thumb + "/>" +
+									//"Address: " + response.nearby_restaurants[i].restaurant.location.address +
+									//"User Rating: " + response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating +
+									//"</span></li>");
 
 		console.log(response.nearby_restaurants[i].restaurant);
 		console.log(response.nearby_restaurants[i].restaurant.name);
