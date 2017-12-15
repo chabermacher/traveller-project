@@ -58,6 +58,7 @@ function storeAddress(object) {
 // When the user clicks the submit button, the address in the field is stored
 $("#submitAddress").click(function() {
     saveAddress($("#autocomplete").val());
+    $("#autocomplete").val('');
 })
 
 });
