@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Passenger</title>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" type="text/css" href="css/materialize.css">
-    <!-- Link css file -->
-    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
-  </head>
-  <body>
-    <header id="pageHeader">
-      Smooth Traveler
-    </header>
-    <section id="top-panel">
-      <div class="row">
-        <div class="col s8" id="map" style="height:600px;"></div>
-        <div class="col s4" id="itemDetails">
-          <ul class="collapsible" data-collapsible="expandable" id="searchDetails">
-            <li>
-              <div class="collapsible-header"><i class="material-icons">place</i>Luby's</div>
-              <div class="collapsible-body"><span>Address info, Yelp rating, Yelp price</span></div>
-            </li>
-            <!-- <li>
+
+<head>
+  <title>Passenger</title>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" type="text/css" href="css/materialize.css">
+  <!-- Link css file -->
+  <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection" />
+</head>
+
+<body>
+  <header id="pageHeader">
+    Smooth Traveler
+  </header>
+  <section id="top-panel">
+    <div class="row">
+      <div class="col s8" id="map" style="height:600px;"></div>
+      <div class="col s4" id="itemDetails">
+        <ul class="collapsible" data-collapsible="expandable" id="searchDetails">
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">place</i>Luby's</div>
+            <div class="collapsible-body">
+              <span>Address info, Yelp rating, Yelp price</span>
+            </div>
+          </li>
+          <!-- <li>
               <div class="collapsible-header"><i class="material-icons">place</i>Extreme Crossfit</div>
               <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
             </li>
@@ -33,67 +38,68 @@
               <div class="collapsible-header"><i class="material-icons">place</i>Thai Tanic</div>
               <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
             </li> -->
-          </ul>
-        </div>
+        </ul>
       </div>
+    </div>
 
-      <div class="row">
-        <div class="col s8" id="resultsInfo">
-        </div>
-        <div class="col s4" id="musicInfo">
-        </div>
+    <div class="row">
+      <div class="col s8" id="resultsInfo">
       </div>
-    </section>
+      <div class="col s4" id="musicInfo">
+      </div>
+    </div>
+  </section>
 
-    <!-- Bottom panel -->
-    <section id="bottom-panel">
-      <!-- Modal Trigger -->
-      <a class="waves-effect waves-light btn modal-trigger blue" href="#modal1">Add</a>
+  <!-- Bottom panel -->
+  <section id="bottom-panel">
+    <!-- Modal Trigger -->
+    <a class="waves-effect waves-light btn modal-trigger blue" href="#modal1">Add</a>
 
-      <!-- Modal Structure -->
-      <div id="modal1" class="modal bottom-sheet">
-        <div class="modal-content">
-          <h4>Add an address </h4>
-          <div class="row">
-            <form class="col s12">
-              <div class="row">
-                <div class="input-field col s12">
-                  <input placeholder="Street Address" id="address" type="text" class="validate">
-                  <label for="address">Street Address</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s6">
-                  <input placeholder="City" id="city" type="text" class="validate">
-                  <label for="city">City</label>
-                </div>
-                <div class="input-field col s4">
-                  <input placeholder="State" id="state" type="text" class="validate">
-                  <label for="state">State</label>
-                </div>
-                <div class="input-field col s2">
-                  <input placeholder="Zip" id="zip" type="text" class="validate">
-                  <label for="zip">Zip</label>
-                </div>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal bottom-sheet">
+      <div class="modal-content">
+        <h4>Add an address </h4>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <input placeholder="Street Address" id="address" type="text" class="validate">
+                <label for="address">Street Address</label>
               </div>
             </div>
-          </form>
-          <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat">Search</a>
-          </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input placeholder="City" id="city" type="text" class="validate">
+                <label for="city">City</label>
+              </div>
+              <div class="input-field col s4">
+                <input placeholder="State" id="state" type="text" class="validate">
+                <label for="state">State</label>
+              </div>
+              <div class="input-field col s2">
+                <input placeholder="Zip" id="zip" type="text" class="validate">
+                <label for="zip">Zip</label>
+              </div>
+            </div>
+        </div>
+        </form>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat">Search</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!--Import jQuery before materialize.js-->
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="js/modal-support.js"></script>
-    <script type="text/javascript" src="js/materialize.js"></script>
-    <!-- App-specific scripts -->
-    <script type="text/javascript" src="js/config.js"></script>
-    <script type="text/javascript" src="js/components/map.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/modal-support.js"></script>
+  <script type="text/javascript" src="js/materialize.js"></script>
+  <!-- App-specific scripts -->
+  <script type="text/javascript" src="js/config.js"></script>
+  <script type="text/javascript" src="js/components/map.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiHLoQIZp6HoFeFNzCOzrOm2H3sM3NXAo&callback=initMap" async
+    defer></script>
+</body>
 
-  </body>
 </html>
