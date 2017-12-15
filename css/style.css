@@ -22,3 +22,8 @@ h1, h2, h3 {
 .collapsible-body {
 	background: orange;
 }
+
+/* puts the google places autocomplete dropdown results above the bootstrap modal 1050 zindex. */
+.pac-container {
+    z-index: 1051 !important;
+}

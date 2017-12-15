@@ -71,7 +71,7 @@
       <div class="modal-content">
         <h4>Add an address </h4>
         <div id="locationField">
-          <input id="autocomplete" placeholder="Enter the address" onFocus="geolocate()" type="text"></input>
+          <input id="autocomplete" placeholder="Enter the address" type="text"></input>
         </div>
         <div>
           <input type="text" id="placelabel" placeholder="Enter a label for the place"></input>
@@ -86,7 +86,7 @@
       <div class="modal-content">
         <h4>Add an address </h4>
         <div id="locationField">
-          <input id="autocompleteEdit" placeholder="Enter the address" onFocus="geolocate()" type="text"></input>
+          <input id="autocompleteEdit" placeholder="Enter the address" type="text"></input>
         </div>
         <div>
           <input type="text" id="placelabelEdit" placeholder="Enter a label for the place"></input>
@@ -109,6 +109,8 @@
   <script type="text/javascript" src="js/components/addresssave.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiHLoQIZp6HoFeFNzCOzrOm2H3sM3NXAo&callback=initMap" async
     defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiHLoQIZp6HoFeFNzCOzrOm2H3sM3NXAo&libraries=places&callback=initAutocomplete"
+    async defer></script>
 </body>
 
 </html>
