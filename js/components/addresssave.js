@@ -19,12 +19,11 @@ $(document).ready(function() {
 // Takes the autocompleted address, makes a call to Google Maps Geocoder API, 
 // And stores the formatted address string, latitude, and longitude in an 
 // object that is pushed to the addresses array stored in localStorage
-function saveAddress(addressString) {
-
+function saveAddress(addressString, label) {
     let addressParam = addressString.replace(/ /g,"+");
     let APIURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressParam + "&key=" + GOOGLE_MAPS_KEY;
     $.get(APIURL).done(function(response){
-        storeAddress(response);
+        storeAddress(response, label);
     });
 
 };
@@ -32,11 +31,12 @@ function saveAddress(addressString) {
 // Takes the result from the Google Maps Geocoder API and stores it in localStorage
 // IF the addresses array already exists in localStorage (addresses have already been added),
 // That array is pulled down, and the new address is pushed into it, then put back into local Storage
-function storeAddress(object) {
+function storeAddress(object, placelabel) {
     if (localStorage.getItem("addresses")) {
         let addressArray = JSON.parse(localStorage.getItem("addresses"));
         addressArray.push({
             address: object.results[0].formatted_address,
+            label: placelabel,
             lat: object.results[0].geometry.location.lat,
             long: object.results[0].geometry.location.lng
         });
@@ -46,6 +46,7 @@ function storeAddress(object) {
         let addressArray = [];
         addressArray.push({
             address: object.results[0].formatted_address,
+            label: placelabel,
             lat: object.results[0].geometry.location.lat,
             long: object.results[0].geometry.location.lng
         });
@@ -57,8 +58,9 @@ function storeAddress(object) {
 
 // When the user clicks the submit button, the address in the field is stored
 $("#submitAddress").click(function() {
-    saveAddress($("#autocomplete").val());
+    saveAddress($("#autocomplete").val(), $("#placelabel").val());
     $("#autocomplete").val('');
+    $("#placelabel").val('');
 })
 
 });
