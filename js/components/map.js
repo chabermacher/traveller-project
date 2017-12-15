@@ -4,12 +4,12 @@ const savedAddresses = [
   {
     address: '1704 McCall Rd, Austin, TX 78703',
     lat: 30.2910983,
-    lng: -97.7662439
+    long: -97.7662439
   },
   {
     address: '6317 Bee Caves Rd #380, Austin, TX 78746',
     lat: 30.2962126,
-    lng: -97.8349851
+    long: -97.8349851
   }
 ];
 
@@ -30,7 +30,7 @@ function initMap() {
     savedAddresses.map(address => {
       const latLang = new google.maps.LatLng({
         lat: address.lat,
-        lng: address.lng
+        lng: address.long
       });
       const marker = new google.maps.Marker({
         position: latLang
