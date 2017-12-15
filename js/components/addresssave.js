@@ -64,6 +64,10 @@ $("#submitAddress").click(function() {
     $("#placelabel").val('');
 })
 
+$("#isHome").click(function() {
+    $("#placelabel").val('Home')
+});
+
 });
 // --------GOOGLE ADDRESS AUTOCOMPLETE FUNCTIONALITY BELOW--------
 
@@ -94,6 +98,8 @@ autocomplete = new google.maps.places.Autocomplete(
 // When the user selects an address from the dropdown, populate the address
 // fields in the form.
 // autocomplete.addListener('place_changed', fillInAddress);
+
+initMap();
 }
 
 // function fillInAddress() {
