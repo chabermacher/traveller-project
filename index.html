@@ -57,30 +57,9 @@
       <div id="modal1" class="modal bottom-sheet">
         <div class="modal-content">
           <h4>Add an address </h4>
-          <div class="row">
-            <form class="col s12">
-              <div class="row">
-                <div class="input-field col s12">
-                  <input placeholder="Street Address" id="address" type="text" class="validate">
-                  <label for="address">Street Address</label>
-                </div>
+          <div id="locationField">
+            <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
               </div>
-              <div class="row">
-                <div class="input-field col s6">
-                  <input placeholder="City" id="city" type="text" class="validate">
-                  <label for="city">City</label>
-                </div>
-                <div class="input-field col s4">
-                  <input placeholder="State" id="state" type="text" class="validate">
-                  <label for="state">State</label>
-                </div>
-                <div class="input-field col s2">
-                  <input placeholder="Zip" id="zip" type="text" class="validate">
-                  <label for="zip">Zip</label>
-                </div>
-              </div>
-            </div>
-          </form>
           <div class="modal-footer">
             <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="addButton">Add</a>
             <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="editButton">Edit</a>
@@ -97,6 +76,7 @@
     <!-- App-specific scripts -->
     <script type="text/javascript" src="js/config.js"></script>
     <script type="text/javascript" src="js/components/map.js"></script>
+    <script type="text/javascript" src="js/components/nearby.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 
   </body>

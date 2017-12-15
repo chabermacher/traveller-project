@@ -1,3 +1,17 @@
+// Firebase config
+//  var config = {
+//    apiKey: "AIzaSyCkncjVkFvOunt8hcaWlDIMx9f1XbBLYIQ",
+//    authDomain: "traveler-project-ca386.firebaseapp.com",
+//    databaseURL: "https://traveler-project-ca386.firebaseio.com",
+//    projectId: "traveler-project-ca386",
+//    storageBucket: "",
+//    messagingSenderId: "932064209486"
+//  };
+ 
+// firebase.initializeApp(config);
+
+const GOOGLE_MAPS_KEY = 'AIzaSyCiHLoQIZp6HoFeFNzCOzrOm2H3sM3NXAo';
+
 function initMap(geolocation) {
   // Checks if user's browser supports geolocation
   if (navigator.geolocation) {
