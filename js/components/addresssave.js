@@ -22,7 +22,7 @@ $(document).ready(function() {
 function saveAddress(addressString) {
 
     let addressParam = addressString.replace(/ /g,"+");
-    let APIURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressParam + "&key=AIzaSyASorhGBHbziEDA-7jVhH9zF622rh8gcdc";
+    let APIURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressParam + "&key=" + GOOGLE_MAPS_KEY;
     $.get(APIURL).done(function(response){
         storeAddress(response);
     });
