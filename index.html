@@ -51,18 +51,37 @@
       <!-- This is the button that  displays the modal panel. It should not be here, but is left as a model for whoever is working on the expanding panel.-->
       <a class="waves-effect waves-light btn modal-trigger blue" href="#modal1">Add</a>
 
-      <!-- Modals can be triggered programmatically: Use this code in the Javascript file for the button:   $('#modal1').modal('open');    -->
+      <a class="waves-effect waves-light btn modal-trigger blue" href="#modal2">Edit</a>
+
+      <!-- Modals can be triggered programmatically: Use this code in the Javascript file for the button:   $('#modal1').modal('open');  or  $('#modal2').modal('open');    -->
 
       <!-- Modal Structure -->
       <div id="modal1" class="modal bottom-sheet">
         <div class="modal-content">
           <h4>Add an address </h4>
           <div id="locationField">
-            <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+            <input id="autocomplete" placeholder="Enter the address" onFocus="geolocate()" type="text"></input>
+              </div>
+              <div>
+                <input type="text" id="placelabel" placeholder="Enter a label for the place"></input>
               </div>
           <div class="modal-footer">
             <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="addButton">Add</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="editButton">Edit</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="modal2" class="modal bottom-sheet">
+        <div class="modal-content">
+          <h4>Add an address </h4>
+          <div id="locationField">
+            <input id="autocompleteEdit" placeholder="Enter the address" onFocus="geolocate()" type="text"></input>
+              </div>
+              <div>
+                <input type="text" id="placelabelEdit" placeholder="Enter a label for the place"></input>
+              </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="editButton">Save</a>
           </div>
         </div>
       </div>
