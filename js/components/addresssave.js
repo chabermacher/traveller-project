@@ -55,7 +55,6 @@ function writeAddresses() {
         `);
     });
 }
-
 // This function adds ONLY the most recently saved address to the page (so that the whole list
 // of addresses don't have to be rewritten)
 
@@ -154,7 +153,7 @@ autocomplete2 = new google.maps.places.Autocomplete(
 // autocomplete.addListener('place_changed', fillInAddress);
 
 // Calls the function to initialize the map
-initMap();
+mapManager.initMap();
 }
 
 // function fillInAddress() {
