@@ -27,3 +27,9 @@ h1, h2, h3 {
 .pac-container {
     z-index: 1051 !important;
 }
+
+#weather {
+	float: right;
+	font-size: 24px;
+	margin-top: 10px;
+}
