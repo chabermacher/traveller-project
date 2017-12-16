@@ -6,9 +6,9 @@ $('#signup-form').submit(function(e) {
   userManager.password = $('#signup-password').val().trim();
 
   // Validate input
-
-  // Create a user in database
-  userManager.createUser();
+  if (userManager.validateEmail() && userManager.validatePassword()) {
+    userManager.createUser();
+  }
 });
 
 // Hangle an existing user logging in
@@ -20,3 +20,7 @@ $('#login-form').submit(function(e) {
 
   userManager.signUserIn();
 });
+
+$('#user-login').on('click', '#logout', function() {
+  userManager.signUserOut();
+})
