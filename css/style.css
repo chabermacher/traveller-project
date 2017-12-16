@@ -3,6 +3,11 @@ body {
 	font-size: 16pt;
 	box-sizing: border-box;
 	background: linear-gradient(to bottom, #dcebff, white);
+	height: 100%;
+}
+
+html {
+	height: 100%;
 }
 
 h1, h2, h3 {
