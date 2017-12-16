@@ -64,8 +64,10 @@ function writeAddresses() {
     });
 }
 
+
 // This function initializes the page - if there is address data in Firebase, it's written to
 // the page. Else, a blank address array is written to firebase.
+
 
 // function initializePage() {
 
@@ -195,7 +197,7 @@ autocomplete2 = new google.maps.places.Autocomplete(
 // autocomplete.addListener('place_changed', fillInAddress);
 
 // Calls the function to initialize the map
-initMap();
+mapManager.initMap();
 }
 
 // function fillInAddress() {
