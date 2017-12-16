@@ -17,6 +17,7 @@
 <body>
   <header id="pageHeader">
     Smooth Traveler
+    <div id="weather"></div>
   </header>
   <section id="top-panel">
     <div class="row">
@@ -25,9 +26,68 @@
         <ul class="collapsible" data-collapsible="expandable" id="searchDetails">
           <li>
             <div class="collapsible-header">
+              <i class="material-icons">place</i>Luby's
+            </div>
+            <div class="collapsible-body">
+              <span>Address, Yelp rating, Yelp price
+                <!-- Nearby Modal Trigger -->
+                <button data-target="nearby1" class="btn modal-trigger">Nearby</button>
+                <!-- Modal Structure -->
+                <div id="nearby1" class="modal bottom-sheet">
+                  <div class="modal-content">
+                    <h4>Nearby Businesses</h4>
+                    <p>A bunch of text</p>
+                  </div>
+                  <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                  </div>
+                </div>
+              </span>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">place</i>Extreme Crossfit
+            </div>
+            <div class="collapsible-body">
+              <span>Lorem ipsum dolor sit amet.
+                <!-- Nearby Modal Trigger -->
+                <button data-target="nearby2" class="btn modal-trigger">Nearby</button>
+                <!-- Modal Structure -->
+                <div id="nearby2" class="modal bottom-sheet">
+                  <div class="modal-content">
+                    <h4>Nearby Businesses</h4>
+                    <p>A bunch of text</p>
+                  </div>
+                  <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                  </div>
+                </div>
+              </span>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">place</i>Thai Tanic</div>
+            <div class="collapsible-body">
+              <span>Lorem ipsum dolor sit amet.
+                <!-- Nearby Modal Trigger -->
+                <button data-target="nearby3" class="btn modal-trigger">Nearby</button>
+                <!-- Modal Structure -->
+                <div id="nearby3" class="modal bottom-sheet">
+                  <div class="modal-content">
+                    <h4>Nearby Businesses</h4>
+                    <p>A bunch of text</p>
+                  </div>
+                  <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                  </div>
+                </div>
+              </span>
               <i class="material-icons">home</i>Add Address Below</div>
             <div class="collapsible-body">
               <span></span>
+
             </div>
           </li>
         </ul>
@@ -52,6 +112,7 @@
 
     <!-- Modals can be triggered programmatically: Use this code in the Javascript file for the button:   $('#modal1').modal('open');  or  $('#modal2').modal('open');    -->
 
+
     <!-- Modal Structure -->
     <div id="modal1" class="modal bottom-sheet">
       <div class="modal-content">
@@ -70,7 +131,9 @@
           <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="submitAddress">Add</a>
         </div>
       </div>
-    </div>
+
+  <body>
+
 
     <div id="modal2" class="modal bottom-sheet">
       <div class="modal-content">
@@ -90,6 +153,7 @@
         </div>
       </div>
     </div>
+
   </section>
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -101,6 +165,15 @@
   <script type="text/javascript" src="js/components/addresssave.js"></script>
   <script type="text/javascript" src="js/components/nearby.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/components/weather.js"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiHLoQIZp6HoFeFNzCOzrOm2H3sM3NXAo&callback=initMap" async
+    defer></script>
+
+
+  </div>
+</div>
+
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxzJBbFR-RNfRWFQfASQpiFyKYfT9mPp0&libraries=places&callback=initAutocomplete"
   async defer></script>
 
