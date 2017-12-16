@@ -75,7 +75,7 @@ function editAddress(index, object, placelabel, isHome) {
     localAddressArray[index].long =object.results[0].geometry.location.lng
     if (isHome) {
         let removed = localAddressArray.splice(index, 1);
-        localAddressArray.unshift(removed);
+        localAddressArray.unshift(removed[0]);
         database.ref().set({"addresses": JSON.stringify(localAddressArray)});
     }
     else {
@@ -150,9 +150,9 @@ function storeAddress(object, placelabel, isHome) {
 // ---------------EVENT LISTENERS-----------------
 
 // When the user clicks the submit button, the saveAddress function is passed the values for
-// the address, the label, the boolean of the "Is this your home address" checkbox, 
-// the "isEdit" boolean that is only true when the user is editing an existing address, and
-// the index of the existing address, if an address is being edited
+// the ADDRESS, the LABEL, the BOOLEAN of the "Is this your home address" checkbox, 
+// the "isEdit" BOOLEAN that is only true when the user is editing an existing address, and
+// the INDEX of the existing address, if an address is being edited
 $("#submitAddress").click(function() {
     saveAddress($("#autocomplete").val(), $("#placelabel").val(), $('#isHome').prop('checked'), false, -1);
     $("#autocomplete").val('');
@@ -177,16 +177,27 @@ database.ref('addresses').on("value", function(snapshot) {
     console.log("Failure: " + errorObject.code)
   });
 
+// Edit buttons next to addresses
 $("body").on("click", ".smalleditbutton", function() {
     $("#autocompleteEdit").val(localAddressArray[$(this).attr("data")].address);
     $("#placelabelEdit").val(localAddressArray[$(this).attr("data")].label);
-    $("#invisibleIndexField").val($(this).attr("data"));
+    $("#addressIndex").val($(this).attr("data"));
     if ($(this).attr("data") == 0){
         $("#isHomeEdit").prop('checked', true);
     }
+    else {
+        $("#isHomeEdit").prop('checked', false);
+    }
 });
 
-// NEED TO ADD LISTENER FOR "SAVE" BUTTON WHEN EDITING AN EXISTING ADDRESS
+// 
+$("#editButton").click(function() {
+    saveAddress($("#autocompleteEdit").val(), $("#placelabelEdit").val(), $('#isHomeEdit').prop('checked'), true, $("#addressIndex").val());
+    $("#autocompleteEdit").val('');
+    $("#placelabelEdit").val('');
+    $('#isHomeEdit').prop('checked', false);
+    $("#addressIndex").val('');
+});
 
 // -----------------RUN ON PAGELOAD----------------
 // initializePage();
