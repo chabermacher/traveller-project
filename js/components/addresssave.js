@@ -29,6 +29,8 @@ function saveAddress(addressString, label, isHome) {
 
 };
 
+// Writes all addresses in the the "address" array to the right side of the page
+
 function writeAddresses() {
     let addressArray = JSON.parse(localStorage.getItem("addresses"));
     $("#searchDetails").empty();
@@ -69,6 +71,7 @@ function initializePage() {
 // Takes the result from the Google Maps Geocoder API and stores it in localStorage
 // IF the addresses array already exists in localStorage (addresses have already been added),
 // That array is pulled down, and the new address is pushed into it, then put back into local Storage
+
 function storeAddress(object, placelabel, isHome) {
     
     let addressArray = JSON.parse(localStorage.getItem("addresses"));
@@ -94,6 +97,7 @@ function storeAddress(object, placelabel, isHome) {
         // Now that new address has been added to array, write the array to localStorage
         localStorage.setItem("addresses", JSON.stringify(addressArray));
     }
+    // Write all addresses to the page
     writeAddresses();
 };
 
@@ -149,6 +153,7 @@ autocomplete2 = new google.maps.places.Autocomplete(
 // fields in the form.
 // autocomplete.addListener('place_changed', fillInAddress);
 
+// Calls the function to initialize the map
 initMap();
 }
 
