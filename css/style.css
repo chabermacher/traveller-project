@@ -22,3 +22,10 @@ h1, h2, h3 {
 .collapsible-body {
 	background: orange;
 }
+
+#weather {
+	float: right;
+	font-size: 18pt;
+	margin-top: 15px;
+
+}
