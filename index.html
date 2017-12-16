@@ -17,6 +17,10 @@
 <body>
   <header id="pageHeader">
     Smooth Traveler
+    <div id="user-login">
+        <a class="waves-effect waves-light btn modal-trigger blue" href="#signup-modal">Sign Up</a>
+        <a class="waves-effect waves-light btn modal-trigger blue" href="#login-modal">Login</a>
+    </div>
     <div id="weather"></div>
   </header>
   <section id="top-panel">
@@ -91,9 +95,63 @@
         </div>
       </div>
     </div>
+
+    <div id="signup-modal" class="modal">
+      <div class="modal-content">
+        <h4>Sign Up</h4>
+      </div>
+      <div class="row">
+        <form class="col s12" id="signup-form">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="signup-email" type="email" class="validate">
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="signup-password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <button type="submit" id="signup-submit" class="btn blue">Sign Up</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="login-modal" class="modal">
+      <div class="modal-content">
+        <h4>Login</h4>
+      </div>
+      <div class="row">
+        <form class="col s12" id="login-form">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="login-email" type="email" class="validate">
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="login-password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <button type="submit" id="login-submit" class="btn blue">Login</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </section>
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
   <script type="text/javascript" src="js/materialize.js"></script>
   <!-- App-specific scripts -->
   <script type="text/javascript" src="js/modal-support.js"></script>
