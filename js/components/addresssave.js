@@ -37,6 +37,8 @@ function saveAddress(addressString, label, isHome, isEdit, isEditIndex) {
         else {
             storeAddress(response, label, isHome);
         }
+    }).then(function() {
+        mapManager.displayPins();
     });
 };
 
@@ -56,8 +58,14 @@ function writeAddresses() {
         }
         $("#searchDetails").append(`
             <li data="${index}">
-                <div class="collapsible-header">
-                    <i class="material-icons">${icon}</i>${object.label}&nbsp;&nbsp;<a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a></div>
+                <div class="collapsible-header address-drilldown">
+                    <div>
+                        <i class="material-icons">${icon}</i>${object.label}
+                    </div>
+                    <div>
+                        <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
+                    </div>
+                </div>
                 <div class="collapsible-body">
                     <span>${address}</span>
                                          
@@ -84,17 +92,17 @@ function writeAddresses() {
 }
 
 function editAddress(index, object, placelabel, isHome) {
-    localAddressArray[index].address = object.results[0].formatted_address;
-    localAddressArray[index].label = placelabel;
-    localAddressArray[index].lat = object.results[0].geometry.location.lat;
-    localAddressArray[index].long =object.results[0].geometry.location.lng;
+    mapManager.addresses[index].address = object.results[0].formatted_address;
+    mapManager.addresses[index].label = placelabel;
+    mapManager.addresses[index].lat = object.results[0].geometry.location.lat;
+    mapManager.addresses[index].long =object.results[0].geometry.location.lng;
     if (isHome) {
-        let removed = localAddressArray.splice(index, 1);
-        localAddressArray.unshift(removed[0]);
-        database.ref().set({"addresses": JSON.stringify(localAddressArray)});
+        let removed = mapManager.addresses.splice(index, 1);
+        mapManager.addresses.unshift(removed[0]);
+        database.ref().set({"addresses": mapManager.addresses});
     }
     else {
-        database.ref().set({"addresses": JSON.stringify(localAddressArray)});
+        database.ref().set({"addresses": mapManager.addresses});
     }
 };
 
@@ -134,7 +142,7 @@ function storeAddress(object, placelabel, isHome) {
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+        database.ref().set({"addresses": mapManager.addresses});
     }
     // Else it's added to the END of the Array
     else {
@@ -145,7 +153,7 @@ function storeAddress(object, placelabel, isHome) {
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+        database.ref().set({"addresses": mapManager.addresses});
     }
     // Write all addresses to the page
     // writeAddresses();
@@ -178,7 +186,7 @@ $("#submitAddress").click(function() {
 
 // This both initializes the page AND updates the application when a new address is added to Firebase
 database.ref('addresses').on("value", function(snapshot) {
-    let array = JSON.parse(snapshot.val());
+    let array = snapshot.val();
     if (snapshot.val() !== null) {
         console.log(array);
         mapManager.addresses = array;
@@ -190,8 +198,8 @@ database.ref('addresses').on("value", function(snapshot) {
 
 // Edit buttons next to addresses
 $("body").on("click", ".smalleditbutton", function() {
-    $("#autocompleteEdit").val(localAddressArray[$(this).attr("data")].address);
-    $("#placelabelEdit").val(localAddressArray[$(this).attr("data")].label);
+    $("#autocompleteEdit").val(mapManager.addresses[$(this).attr("data")].address);
+    $("#placelabelEdit").val(mapManager.addresses[$(this).attr("data")].label);
     $("#addressIndex").val($(this).attr("data"));
     if ($(this).attr("data") == 0){
         $("#isHomeEdit").prop('checked', true);
