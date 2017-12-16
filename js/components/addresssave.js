@@ -48,13 +48,13 @@ function writeAddresses() {
     $("#searchDetails").empty();
     localAddressArray.forEach(function(object, index){
         let icon;
-        let address = object.address.replace(",",",<br>")
+        let address = object.address.replace(",",",<br>");
         address = address.replace(", USA", "");
         if (index === 0) {
-            icon = "home"
+            icon = "home";
         }
         else {
-            icon = "place"
+            icon = "place";
         }
         $("#searchDetails").append(`
             <li data="${index}">
@@ -69,10 +69,10 @@ function writeAddresses() {
 }
 
 function editAddress(index, object, placelabel, isHome) {
-    localAddressArray[index].address = object.results[0].formatted_address
-    localAddressArray[index].label = placelabel
-    localAddressArray[index].lat = object.results[0].geometry.location.lat
-    localAddressArray[index].long =object.results[0].geometry.location.lng
+    localAddressArray[index].address = object.results[0].formatted_address;
+    localAddressArray[index].label = placelabel;
+    localAddressArray[index].lat = object.results[0].geometry.location.lat;
+    localAddressArray[index].long =object.results[0].geometry.location.lng;
     if (isHome) {
         let removed = localAddressArray.splice(index, 1);
         localAddressArray.unshift(removed[0]);
@@ -190,7 +190,7 @@ $("body").on("click", ".smalleditbutton", function() {
     }
 });
 
-// 
+// Submit button for the edit panel - submits the changes and clears out the fields
 $("#editButton").click(function() {
     saveAddress($("#autocompleteEdit").val(), $("#placelabelEdit").val(), $('#isHomeEdit').prop('checked'), true, $("#addressIndex").val());
     $("#autocompleteEdit").val('');
