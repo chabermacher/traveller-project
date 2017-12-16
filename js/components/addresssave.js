@@ -55,7 +55,7 @@ function writeAddresses() {
         $("#searchDetails").append(`
             <li data="${index}">
                 <div class="collapsible-header">
-                    <i class="material-icons">${icon}</i>${object.label}</div>
+                    <i class="material-icons">${icon}</i>${object.label}&nbsp;&nbsp;<a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a></div>
                 <div class="collapsible-body">
                     <span>${address}</span>
                 </div>

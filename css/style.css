@@ -35,3 +35,9 @@ h1, h2, h3 {
 	font-size: 24px;
 	margin-top: 10px;
 }
+
+.smalleditbutton {
+	padding: 0 8px;
+	height: 25px;
+	line-height: 25px;
+}
