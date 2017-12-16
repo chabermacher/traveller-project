@@ -15,6 +15,14 @@ async defer></script> */
 
 $(document).ready(function() {
 
+// -----------INITIALIZE FIREBASE-----------------
+firebase.initializeApp(config);
+
+// ---------------VARIABLES-----------------------
+var database = firebase.database();
+var localAddressArray = [];
+
+
 // ---------------FUNCTIONS-----------------------
 
 // Takes the autocompleted address, makes a call to Google Maps Geocoder API, 
@@ -32,9 +40,8 @@ function saveAddress(addressString, label, isHome) {
 // Writes all addresses in the the "address" array to the right side of the page
 
 function writeAddresses() {
-    let addressArray = JSON.parse(localStorage.getItem("addresses"));
     $("#searchDetails").empty();
-    addressArray.forEach(function(object, index){
+    localAddressArray.forEach(function(object, index){
         let icon;
         let address = object.address.replace(",",",<br>")
         address = address.replace(", USA", "");
@@ -56,17 +63,25 @@ function writeAddresses() {
     });
 }
 
-// This function adds ONLY the most recently saved address to the page (so that the whole list
-// of addresses don't have to be rewritten)
+// This function initializes the page
 
 function initializePage() {
-    if (localStorage.getItem("addresses")) {
-        writeAddresses();
-    }
-    else {
-        localStorage.setItem("addresses", "[]")
-    }
+
+    database.ref('addresses').once('value').then(function(snapshot){
+        if (snapshot.val() !== undefined) {
+            writeAddresses();
+            localAddressArray = JSON.parse(snapshot.val())
+        }
+        else {
+            database.ref().set({addresses: "[]"});
+            localAddressArray = [];
+        }
+    });    
 }
+
+function pullInAddresses(array) {
+    localAddressArray = array;
+};
 
 // Takes the result from the Google Maps Geocoder API and stores it in localStorage
 // IF the addresses array already exists in localStorage (addresses have already been added),
@@ -74,31 +89,41 @@ function initializePage() {
 
 function storeAddress(object, placelabel, isHome) {
     
-    let addressArray = JSON.parse(localStorage.getItem("addresses"));
     // If the user has selected the "Home" checkbox, this is added to the BEGINNING of the array
     if (isHome) {
-        addressArray.unshift({
+        localAddressArray.unshift({
             address: object.results[0].formatted_address,
             label: placelabel,
             lat: object.results[0].geometry.location.lat,
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to localStorage
-        localStorage.setItem("addresses", JSON.stringify(addressArray));
+        database.ref().set({"addresses": JSON.stringify(localAddressArray)});
     }
     // Else it's added to the END of the Array
     else {
-        addressArray.push({
+        localAddressArray.push({
             address: object.results[0].formatted_address,
             label: placelabel,
             lat: object.results[0].geometry.location.lat,
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to localStorage
-        localStorage.setItem("addresses", JSON.stringify(addressArray));
+        database.ref().set({"addresses": JSON.stringify(localAddressArray)});
     }
     // Write all addresses to the page
     writeAddresses();
+};
+
+function testStorage() {
+    // database.ref().set({addresses: "test123"});
+    let something;
+    database.ref('addresses').once('value').then(function(snapshot){
+        something = snapshot.val();
+        console.log(something + "something")
+        console.log(snapshot.val() + "val");
+    });
+    console.log(something + "something outside");
 };
 
 // ---------------EVENT LISTENERS-----------------
