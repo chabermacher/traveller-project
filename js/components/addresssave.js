@@ -29,43 +29,72 @@ function saveAddress(addressString, label, isHome) {
 
 };
 
+function writeAddresses() {
+    let addressArray = JSON.parse(localStorage.getItem("addresses"));
+    $("#searchDetails").empty();
+    addressArray.forEach(function(object, index){
+        let icon;
+        let address = object.address.replace(",",",<br>")
+        address = address.replace(", USA", "");
+        if (index === 0) {
+            icon = "home"
+        }
+        else {
+            icon = "place"
+        }
+        $("#searchDetails").append(`
+            <li data="` + index + `">
+                <div class="collapsible-header">
+                    <i class="material-icons">` + icon + `</i>` + object.label + `</div>
+                <div class="collapsible-body">
+                    <span>` + address + `</span>
+                </div>
+            </li>
+        `);
+    });
+}
+
+// This function adds ONLY the most recently saved address to the page (so that the whole list
+// of addresses don't have to be rewritten)
+
+function initializePage() {
+    if (localStorage.getItem("addresses")) {
+        writeAddresses();
+    }
+    else {
+        localStorage.setItem("addresses", "[]")
+    }
+}
+
 // Takes the result from the Google Maps Geocoder API and stores it in localStorage
 // IF the addresses array already exists in localStorage (addresses have already been added),
 // That array is pulled down, and the new address is pushed into it, then put back into local Storage
 function storeAddress(object, placelabel, isHome) {
-    if (localStorage.getItem("addresses")) {
-        let addressArray = JSON.parse(localStorage.getItem("addresses"));
-        // If the user has selected the "Home" checkbox, this is added to the BEGINNING of the array
-        if (isHome) {
-            addressArray.unshift({
-                address: object.results[0].formatted_address,
-                label: placelabel,
-                lat: object.results[0].geometry.location.lat,
-                long: object.results[0].geometry.location.lng
-            });
-        }
-        // Else it's added to the END of the Array
-        else {
-            addressArray.push({
-                address: object.results[0].formatted_address,
-                label: placelabel,
-                lat: object.results[0].geometry.location.lat,
-                long: object.results[0].geometry.location.lng
-            });
-        }
-
+    
+    let addressArray = JSON.parse(localStorage.getItem("addresses"));
+    // If the user has selected the "Home" checkbox, this is added to the BEGINNING of the array
+    if (isHome) {
+        addressArray.unshift({
+            address: object.results[0].formatted_address,
+            label: placelabel,
+            lat: object.results[0].geometry.location.lat,
+            long: object.results[0].geometry.location.lng
+        });
+        // Now that new address has been added to array, write the array to localStorage
         localStorage.setItem("addresses", JSON.stringify(addressArray));
     }
+    // Else it's added to the END of the Array
     else {
-        let addressArray = [];
         addressArray.push({
             address: object.results[0].formatted_address,
             label: placelabel,
             lat: object.results[0].geometry.location.lat,
             long: object.results[0].geometry.location.lng
         });
+        // Now that new address has been added to array, write the array to localStorage
         localStorage.setItem("addresses", JSON.stringify(addressArray));
     }
+    writeAddresses();
 };
 
 // ---------------EVENT LISTENERS-----------------
@@ -80,6 +109,9 @@ $("#submitAddress").click(function() {
 })
 
 // NEED TO ADD FUNCTION FOR "SAVE" BUTTON WHEN EDITING AN EXISTING ADDRESS
+
+// -----------------RUN ON PAGELOAD----------------
+initializePage();
 
 });
 // --------GOOGLE ADDRESS AUTOCOMPLETE FUNCTIONALITY BELOW--------
