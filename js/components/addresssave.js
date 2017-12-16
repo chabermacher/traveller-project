@@ -45,11 +45,11 @@ function writeAddresses() {
             icon = "place"
         }
         $("#searchDetails").append(`
-            <li data="` + index + `">
+            <li data="${index}">
                 <div class="collapsible-header">
-                    <i class="material-icons">` + icon + `</i>` + object.label + `</div>
+                    <i class="material-icons">${icon}</i>${object.label}</div>
                 <div class="collapsible-body">
-                    <span>` + address + `</span>
+                    <span>${address}</span>
                 </div>
             </li>
         `);
