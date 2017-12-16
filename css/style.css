@@ -2,6 +2,7 @@ body {
 	font-family: 'Libre Franklin', sans-serif;
 	font-size: 16pt;
 	box-sizing: border-box;
+	background: linear-gradient(to bottom, #dcebff, white);
 }
 
 h1, h2, h3 {
@@ -11,13 +12,14 @@ h1, h2, h3 {
 
 
 #pageHeader {
-	background-color: #2196f3;
-	color: white;
+	background-color: #dcebff;
+	color: #313e4e;
 	font-family: 'Libre Franklin', sans-serif;
 	font-size: 24pt;
 	height: 60px;
 	padding: 10px 10px 10px 10px;
-
+	font-weight: bold;
+	
 }
 .collapsible-body {
 	background: orange;
