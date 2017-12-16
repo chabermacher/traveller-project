@@ -25,23 +25,9 @@
         <ul class="collapsible" data-collapsible="expandable" id="searchDetails">
           <li>
             <div class="collapsible-header">
-              <i class="material-icons">place</i>Luby's</div>
+              <i class="material-icons">home</i>Add Address Below</div>
             <div class="collapsible-body">
-              <span>Address info, Yelp rating, Yelp price</span>
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header">
-              <i class="material-icons">place</i>Extreme Crossfit</div>
-            <div class="collapsible-body">
-              <span>Lorem ipsum dolor sit amet.</span>
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header">
-              <i class="material-icons">place</i>Thai Tanic</div>
-            <div class="collapsible-body">
-              <span>Lorem ipsum dolor sit amet.</span>
+              <span></span>
             </div>
           </li>
         </ul>
@@ -76,6 +62,10 @@
         <div>
           <input type="text" id="placelabel" placeholder="Enter a label for the place"></input>
         </div>
+        <div>
+          <input type="checkbox" class="filled-in" id="isHome"/>
+          <label for="isHome">Is this your home address?</label>
+        </div>
         <div class="modal-footer">
           <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="submitAddress">Add</a>
         </div>
@@ -84,12 +74,16 @@
 
     <div id="modal2" class="modal bottom-sheet">
       <div class="modal-content">
-        <h4>Add an address </h4>
+        <h4>Edit Address </h4>
         <div id="locationField">
           <input id="autocompleteEdit" placeholder="Enter the address" type="text"></input>
         </div>
         <div>
           <input type="text" id="placelabelEdit" placeholder="Enter a label for the place"></input>
+        </div>
+        <div>
+          <input type="checkbox" class="filled-in" id="isHomeEdit"/>
+          <label for="isHomeEdit">Is this your home address?</label>
         </div>
         <div class="modal-footer">
           <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat" id="editButton">Save</a>
@@ -107,10 +101,9 @@
   <script type="text/javascript" src="js/components/map.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript" src="js/components/addresssave.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiHLoQIZp6HoFeFNzCOzrOm2H3sM3NXAo&callback=initMap" async
-    defer></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiHLoQIZp6HoFeFNzCOzrOm2H3sM3NXAo&libraries=places&callback=initAutocomplete"
-    async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxzJBbFR-RNfRWFQfASQpiFyKYfT9mPp0&libraries=places&callback=initAutocomplete"
+  async defer></script>
+
 </body>
 
 </html>
