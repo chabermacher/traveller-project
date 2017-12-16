@@ -29,13 +29,17 @@ var localAddressArray = [];
 // Takes the autocompleted address, makes a call to Google Maps Geocoder API, 
 // And stores the formatted address string, latitude, and longitude in an 
 // object that is pushed to the addresses array stored in Firebase
-function saveAddress(addressString, label, isHome) {
+function saveAddress(addressString, label, isHome, isEdit, isEditIndex) {
     let addressParam = addressString.replace(/ /g,"+");
     let APIURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addressParam + "&key=" + GOOGLE_MAPS_KEY;
     $.get(APIURL).done(function(response){
-        storeAddress(response, label, isHome);
+        if (isEdit) {
+            editAddress(isEditIndex, response, label, isHome);
+        }
+        else {
+            storeAddress(response, label, isHome);
+        }
     });
-
 };
 
 // Writes all addresses in the the "address" array to the right side of the page
@@ -63,6 +67,21 @@ function writeAddresses() {
         `);
     });
 }
+
+function editAddress(index, object, placelabel, isHome) {
+    localAddressArray[index].address = object.results[0].formatted_address
+    localAddressArray[index].label = placelabel
+    localAddressArray[index].lat = object.results[0].geometry.location.lat
+    localAddressArray[index].long =object.results[0].geometry.location.lng
+    if (isHome) {
+        let removed = localAddressArray.splice(index, 1);
+        localAddressArray.unshift(removed);
+        database.ref().set({"addresses": JSON.stringify(localAddressArray)});
+    }
+    else {
+        database.ref().set({"addresses": JSON.stringify(localAddressArray)});
+    }
+};
 
 
 // This function initializes the page - if there is address data in Firebase, it's written to
@@ -131,13 +150,16 @@ function storeAddress(object, placelabel, isHome) {
 // ---------------EVENT LISTENERS-----------------
 
 // When the user clicks the submit button, the saveAddress function is passed the values for
-// the address, the label, and the boolean of the "Is this your home address" checkbox
+// the address, the label, the boolean of the "Is this your home address" checkbox, 
+// the "isEdit" boolean that is only true when the user is editing an existing address, and
+// the index of the existing address, if an address is being edited
 $("#submitAddress").click(function() {
-    saveAddress($("#autocomplete").val(), $("#placelabel").val(), $('#isHome').prop('checked'));
+    saveAddress($("#autocomplete").val(), $("#placelabel").val(), $('#isHome').prop('checked'), false, -1);
     $("#autocomplete").val('');
     $("#placelabel").val('');
     $('#isHome').prop('checked', false);
 });
+
 
 // This both initializes the page AND updates the application when a new address is added to Firebase
 database.ref('addresses').on("value", function(snapshot) {
@@ -155,7 +177,16 @@ database.ref('addresses').on("value", function(snapshot) {
     console.log("Failure: " + errorObject.code)
   });
 
-// NEED TO ADD FUNCTION FOR "SAVE" BUTTON WHEN EDITING AN EXISTING ADDRESS
+$("body").on("click", ".smalleditbutton", function() {
+    $("#autocompleteEdit").val(localAddressArray[$(this).attr("data")].address);
+    $("#placelabelEdit").val(localAddressArray[$(this).attr("data")].label);
+    $("#invisibleIndexField").val($(this).attr("data"));
+    if ($(this).attr("data") == 0){
+        $("#isHomeEdit").prop('checked', true);
+    }
+});
+
+// NEED TO ADD LISTENER FOR "SAVE" BUTTON WHEN EDITING AN EXISTING ADDRESS
 
 // -----------------RUN ON PAGELOAD----------------
 // initializePage();

@@ -41,3 +41,7 @@ h1, h2, h3 {
 	height: 25px;
 	line-height: 25px;
 }
+
+#invisibleIndexField {
+	display: none;
+}
