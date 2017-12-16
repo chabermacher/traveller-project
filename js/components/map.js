@@ -2,15 +2,10 @@ class MapManager {
   constructor() {
     this.map = {};
     this.home = {};
-    this.addresses = JSON.parse(localStorage.getItem('addresses'));
+    this.addresses = [];
   }
   initMap() {
     // Create a map object and specify the DOM element for display.
-    // Later use the primary address from localStorage
-    this.home = new google.maps.LatLng({
-      lat: this.addresses[0].lat,
-      lng: this.addresses[0].long
-    })
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: this.home,
       zoom: 13
@@ -18,6 +13,22 @@ class MapManager {
     
     // Do something only the first time the map is loaded
     google.maps.event.addListenerOnce(this.map, 'tilesloaded', this.displayPins());
+  }
+  setHome(snapshot) {
+    let homeCoords = {};
+    if (snapshot.val()) {
+      homeCoords = {
+        lat: this.addresses[0].lat,
+        lng: this.addresses[0].long
+      }
+    }
+    else {
+      homeCoords = {
+        lat: 30.3074624,
+        lng: -98.0335911
+      }
+    }
+    this.home = new google.maps.LatLng(homeCoords);
   }
   displayPins() {
     this.addresses.map(address => {

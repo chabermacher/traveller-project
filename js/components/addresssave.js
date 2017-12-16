@@ -13,15 +13,13 @@ async defer></script> */
 // Further, there needs to be a search field with the id "autocomplete" for this to work
 // Extra comment
 
-$(document).ready(function() {
-
 // -----------INITIALIZE FIREBASE-----------------
 firebase.initializeApp(config);
 
 // ---------------VARIABLES-----------------------
 var database = firebase.database();
 // This variable will be updated to match the array in Firebase every time Firebase is updated
-var localAddressArray = [];
+mapManager.addresses = [];
 
 
 // ---------------FUNCTIONS-----------------------
@@ -46,7 +44,7 @@ function saveAddress(addressString, label, isHome, isEdit, isEditIndex) {
 
 function writeAddresses() {
     $("#searchDetails").empty();
-    localAddressArray.forEach(function(object, index){
+    mapManager.addresses.forEach(function(object, index){
         let icon;
         let address = object.address.replace(",",",<br>");
         address = address.replace(", USA", "");
@@ -110,17 +108,17 @@ function editAddress(index, object, placelabel, isHome) {
 //     database.ref('addresses').once('value').then(function(snapshot){
 //         if (snapshot.val() !== undefined) {
 //             writeAddresses();
-//             localAddressArray = JSON.parse(snapshot.val())
+//             mapManager.addresses = JSON.parse(snapshot.val())
 //         }
 //         else {
 //             database.ref().set({addresses: "[]"});
-//             localAddressArray = [];
+//             mapManager.addresses = [];
 //         }
 //     });    
 // }
-// This function sets the global localAddressArray variable equal to the array passed as an argument
+// This function sets the global mapManager.addresses variable equal to the array passed as an argument
 // function pullInAddresses(array) {
-//     localAddressArray = array;
+//     mapManager.addresses = array;
 // };
 
 // Takes the result from the Google Maps Geocoder API and stores it in Firebase
@@ -129,25 +127,25 @@ function storeAddress(object, placelabel, isHome) {
     
     // If the user has selected the "Home" checkbox, this is added to the BEGINNING of the array
     if (isHome) {
-        localAddressArray.unshift({
+        mapManager.addresses.unshift({
             address: object.results[0].formatted_address,
             label: placelabel,
             lat: object.results[0].geometry.location.lat,
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": JSON.stringify(localAddressArray)});
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
     }
     // Else it's added to the END of the Array
     else {
-        localAddressArray.push({
+        mapManager.addresses.push({
             address: object.results[0].formatted_address,
             label: placelabel,
             lat: object.results[0].geometry.location.lat,
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": JSON.stringify(localAddressArray)});
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
     }
     // Write all addresses to the page
     // writeAddresses();
@@ -183,12 +181,8 @@ database.ref('addresses').on("value", function(snapshot) {
     let array = JSON.parse(snapshot.val());
     if (snapshot.val() !== null) {
         console.log(array);
-        localAddressArray = array;
+        mapManager.addresses = array;
         writeAddresses();
-    }
-    else {
-        database.ref().set({addresses: "[]"});
-        localAddressArray = [];
     }
   }, function(errorObject) {
     console.log("Failure: " + errorObject.code)
@@ -219,7 +213,6 @@ $("#editButton").click(function() {
 // -----------------RUN ON PAGELOAD----------------
 // initializePage();
 
-});
 // --------GOOGLE ADDRESS AUTOCOMPLETE FUNCTIONALITY BELOW--------
 
 // This example displays an address form, using the autocomplete feature
@@ -231,32 +224,36 @@ $("#editButton").click(function() {
 
 var placeSearch, autocomplete;
 var componentForm = {
-street_number: 'short_name',
-route: 'long_name',
-locality: 'long_name',
-administrative_area_level_1: 'short_name',
-country: 'long_name',
-postal_code: 'short_name'
+    street_number: 'short_name',
+    route: 'long_name',
+    locality: 'long_name',
+    administrative_area_level_1: 'short_name',
+    country: 'long_name',
+    postal_code: 'short_name'
 };
 
 function initAutocomplete() {
-// Create the autocomplete object, restricting the search to geographical
-// location types.
+    // Create the autocomplete object, restricting the search to geographical
+    // location types.
 
-autocomplete = new google.maps.places.Autocomplete(
-    /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-    {types: ['geocode']});
+    autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+        {types: ['geocode']});
 
-autocomplete2 = new google.maps.places.Autocomplete(
-    /** @type {!HTMLInputElement} */(document.getElementById('autocompleteEdit')),
-    {types: ['geocode']});
+    autocomplete2 = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */(document.getElementById('autocompleteEdit')),
+        {types: ['geocode']});
 
-// When the user selects an address from the dropdown, populate the address
-// fields in the form.
-// autocomplete.addListener('place_changed', fillInAddress);
+    // When the user selects an address from the dropdown, populate the address
+    // fields in the form.
+    // autocomplete.addListener('place_changed', fillInAddress);
 
-// Calls the function to initialize the map
-mapManager.initMap();
+    database.ref('addresses').once('value', function(snapshot) {
+        // Sets what home should be - an existing home, or Austin if none
+        mapManager.setHome(snapshot);
+        // Calls the function to initialize the map
+        mapManager.initMap();
+    });
 }
 
 // function fillInAddress() {
