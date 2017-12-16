@@ -1,5 +1,4 @@
-const userManager = new UserManager();
-
+// Handle a new user logging in
 $('#signup-form').submit(function(e) {
   console.log('sign up form submitted');
   e.preventDefault();
@@ -12,7 +11,7 @@ $('#signup-form').submit(function(e) {
   userManager.createUser();
 });
 
-// Sign in
+// Hangle an existing user logging in
 $('#login-form').submit(function(e) {
   console.log('login form submitted');
   e.preventDefault();
