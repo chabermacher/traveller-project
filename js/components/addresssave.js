@@ -142,7 +142,7 @@ function storeAddress(object, placelabel, isHome) {
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": mapManager.addresses});
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
     }
     // Else it's added to the END of the Array
     else {
@@ -153,7 +153,7 @@ function storeAddress(object, placelabel, isHome) {
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": mapManager.addresses});
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
     }
     // Write all addresses to the page
     // writeAddresses();
@@ -186,7 +186,7 @@ $("#submitAddress").click(function() {
 
 // This both initializes the page AND updates the application when a new address is added to Firebase
 database.ref('addresses').on("value", function(snapshot) {
-    let array = snapshot.val();
+    let array = JSON.parse(snapshot.val());
     if (snapshot.val() !== null) {
         console.log(array);
         mapManager.addresses = array;
@@ -217,6 +217,7 @@ $("#editButton").click(function() {
     $('#isHomeEdit').prop('checked', false);
     $("#addressIndex").val('');
 });
+
 
 // -----------------RUN ON PAGELOAD----------------
 // initializePage();
