@@ -99,10 +99,10 @@ function editAddress(index, object, placelabel, isHome) {
     if (isHome) {
         let removed = mapManager.addresses.splice(index, 1);
         mapManager.addresses.unshift(removed[0]);
-        database.ref().set({"addresses": mapManager.addresses});
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
     }
     else {
-        database.ref().set({"addresses": mapManager.addresses});
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
     }
 };
 
