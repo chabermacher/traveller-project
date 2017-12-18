@@ -16,27 +16,33 @@ function nearby(address) {
     }
   }).done(function(response) {
     for (i = 0; i < 5; i++) {
-      // Pushing Information into the search details
-      //$(".collapsible-body").html("<li><span><img class='responsive-img' src=" + response.nearby_restaurants[i].restaurant.thumb + "/>" +
-      //"Address: " + response.nearby_restaurants[i].restaurant.location.address +
-      //"User Rating: " + response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating +
-      //"</span></li>");
 
-      console.log(response.nearby_restaurants[i].restaurant);
-      console.log(response.nearby_restaurants[i].restaurant.name);
+      // Pushing information into the nearby modal
+      $(".nearby").html('')
+      $(".nearby").append("<div><h4>" + response.nearby_restaurants[i].restaurant.name + "</h4>" +
+                               "<img src='" + response.nearby_restaurants[i].restaurant.thumb + "'/>" +
+                               "<p>Address: " + response.nearby_restaurants[i].restaurant.location.address + "</p>" +
+                               "<p>Cuisine: " + response.nearby_restaurants[i].restaurant.cuisines + "</p>" +
+                               "<p>Price Range (1-5): " + response.nearby_restaurants[i].restaurant.price_range + "</p>" +
+                               "<p>User Rating: " + response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating + "</p></div>")
+      
+
+      // Debugging
+      //============================================================
+      //console.log(response.nearby_restaurants[i].restaurant);
+      //console.log(response.nearby_restaurants[i].restaurant.name);
 
       // Console Log Address Output
-      console.log(response.nearby_restaurants[i].restaurant.location.address);
-      console.log(response.nearby_restaurants[i].restaurant.location.latitude);
-      console.log(response.nearby_restaurants[i].restaurant.location.longitude);
+      //console.log(response.nearby_restaurants[i].restaurant.location.address);
+      //console.log(response.nearby_restaurants[i].restaurant.location.latitude);
+      //console.log(response.nearby_restaurants[i].restaurant.location.longitude);
 
       // Console Log Restaurant Information
-      console.log(response.nearby_restaurants[i].restaurant.cuisines);
-      console.log(response.nearby_restaurants[i].restaurant.price_range);
-      console.log(
-        response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating
-      );
-      console.log(response.nearby_restaurants[i].restaurant.thumb);
+      //console.log(response.nearby_restaurants[i].restaurant.cuisines);
+      //console.log(response.nearby_restaurants[i].restaurant.price_range);
+      //console.log(response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating);
+      //console.log(response.nearby_restaurants[i].restaurant.thumb);
+      
     }
   });
 }
