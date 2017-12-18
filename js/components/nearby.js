@@ -15,10 +15,13 @@ function nearby(address) {
       'user-key': '3db1ea2472489650b0b491a357916958'
     }
   }).done(function(response) {
+
+      //Clear any information in the modal
+      $(".nearby").html('')
+      
     for (i = 0; i < 5; i++) {
 
       // Pushing information into the nearby modal
-      $(".nearby").html('')
       $(".nearby").append("<div><h4>" + response.nearby_restaurants[i].restaurant.name + "</h4>" +
                                "<img src='" + response.nearby_restaurants[i].restaurant.thumb + "'/>" +
                                "<p>Address: " + response.nearby_restaurants[i].restaurant.location.address + "</p>" +
@@ -42,7 +45,7 @@ function nearby(address) {
       //console.log(response.nearby_restaurants[i].restaurant.price_range);
       //console.log(response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating);
       //console.log(response.nearby_restaurants[i].restaurant.thumb);
-      
+
     }
   });
 }
