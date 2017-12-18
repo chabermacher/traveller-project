@@ -16,48 +16,43 @@
 
 <body>
   <header id="pageHeader">
-    Smooth Traveler
+    <div>
+      <h1>Smooth Traveler</h1>
+    </div>
     <div id="user-login">
-        <a class="waves-effect waves-light btn modal-trigger blue" href="#signup-modal">Sign Up</a>
-        <a class="waves-effect waves-light btn modal-trigger blue" href="#login-modal">Login</a>
-    </div>
-    <div id="weather"></div>
+      <a class="waves-effect waves-light btn modal-trigger blue" href="#signup-modal">Sign Up</a>
+      <a class="waves-effect waves-light btn modal-trigger blue" href="#login-modal">Login</a>
+  </div>
   </header>
-  <section id="top-panel">
-    <div class="row">
-      <div class="col s8" id="map" style="height:600px;"></div>
-      <div class="col s4" id="itemDetails">
-        <ul class="collapsible" data-collapsible="expandable" id="searchDetails">
-          <li>
-            <div class="collapsible-header">
-              <i class="material-icons">home</i>Add Address Below</div>
-            <div class="collapsible-body">
-              <span></span>
-            </div>
-          </li>
-        </ul>
-      </div>
+  <section id="top-panel" class="row">
+    <div class="col s8">
+      <div id="map" style="height:600px;"></div>
     </div>
-
-    <div class="row">
-      <div class="col s8" id="resultsInfo">
-      </div>
-      <div class="col s4" id="musicInfo">
+    <div class="col s4">
+      <div class="row">
+        <div id="weather"></div>
+        <div class="col s12" id="itemDetails">
+          <ul class="collapsible" data-collapsible="expandable" id="searchDetails">
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">home</i>Add Address Below</div>
+              <div class="collapsible-body">
+                <span></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <a class="waves-effect waves-light btn modal-trigger blue" href="#modal1">Add</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Bottom panel -->
   <section id="bottom-panel">
-    <!-- Modal Trigger -->
-    <!-- This is the button that  displays the modal panel. It should not be here, but is left as a model for whoever is working on the expanding panel.-->
-    <a class="waves-effect waves-light btn modal-trigger blue" href="#modal1">Add</a>
-
-    <!-- <a class="waves-effect waves-light btn modal-trigger blue" href="#modal2">Edit</a> -->
-
-    <!-- Modals can be triggered programmatically: Use this code in the Javascript file for the button:   $('#modal1').modal('open');  or  $('#modal2').modal('open');    -->
-
-    <!-- Modal Structure -->
     <div id="modal1" class="modal bottom-sheet">
       <div class="modal-content">
         <h4>Add an address </h4>
