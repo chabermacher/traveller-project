@@ -63,6 +63,9 @@ function writeAddresses() {
                         <i class="material-icons">${icon}</i>${object.label}
                     </div>
                     <div>
+                        <span class="travelTime" id="travel${index}"></span>
+                    </div>
+                    <div>
                         <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
                     </div>
                 </div>
@@ -85,6 +88,11 @@ function writeAddresses() {
             </li>
 
         `);
+        // Add the travel time for each non-home address (from home to the address)
+            if (index !== 0) {
+                travelTime.getTime(mapManager.addresses[0].lat, mapManager.addresses[0].long, object.lat, object.long, index)
+            }
+
         // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
         $('.modal').modal();
         
@@ -199,6 +207,10 @@ database.ref('addresses').on("value", function(snapshot) {
         mapManager.addresses = array;
         writeAddresses();
     }
+    else {
+        database.ref().set({addresses: "[]"});
+        mapManager.addresses = [];
+        }
   }, function(errorObject) {
     console.log("Failure: " + errorObject.code)
   });
