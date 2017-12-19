@@ -63,7 +63,7 @@ function writeAddresses() {
                         <i class="material-icons">${icon}</i>${object.label}
                     </div>
                     <div>
-                        <span class="travelTime" data="travel${index}"></span>
+                        <span class="travelTime" id="travel${index}"></span>
                     </div>
                     <div>
                         <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
@@ -207,6 +207,10 @@ database.ref('addresses').on("value", function(snapshot) {
         mapManager.addresses = array;
         writeAddresses();
     }
+    else {
+        database.ref().set({addresses: "[]"});
+        mapManager.addresses = [];
+        }
   }, function(errorObject) {
     console.log("Failure: " + errorObject.code)
   });
