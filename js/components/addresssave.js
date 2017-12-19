@@ -21,6 +21,7 @@ var database = firebase.database();
 // This variable will be updated to match the array in Firebase every time Firebase is updated
 mapManager.addresses = [];
 
+const user = firebase.auth().currentUser;
 
 // ---------------FUNCTIONS-----------------------
 
@@ -42,8 +43,48 @@ function saveAddress(addressString, label, isHome, isEdit, isEditIndex) {
     });
 };
 
-// Writes all addresses in the the "address" array to the right side of the page
+function editAddress(index, object, placelabel, isHome) {
+    mapManager.addresses[index].address = object.results[0].formatted_address;
+    mapManager.addresses[index].label = placelabel;
+    mapManager.addresses[index].lat = object.results[0].geometry.location.lat;
+    mapManager.addresses[index].long =object.results[0].geometry.location.lng;
+    if (isHome) {
+        let removed = mapManager.addresses.splice(index, 1);
+        mapManager.addresses.unshift(removed[0]);
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+    }
+    else {
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+    }
+};
 
+// Takes the result from the Google Maps Geocoder API and stores it in Firebase
+function storeAddress(object, placelabel, isHome) {
+    // If the user has selected the "Home" checkbox, this is added to the BEGINNING of the array
+    if (isHome) {
+        mapManager.addresses.unshift({
+            address: object.results[0].formatted_address,
+            label: placelabel,
+            lat: object.results[0].geometry.location.lat,
+            long: object.results[0].geometry.location.lng
+        });
+        // Now that new address has been added to array, write the array to Firebase
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+    }
+    // Else it's added to the END of the Array
+    else {
+        mapManager.addresses.push({
+            address: object.results[0].formatted_address,
+            label: placelabel,
+            lat: object.results[0].geometry.location.lat,
+            long: object.results[0].geometry.location.lng
+        });
+        // Now that new address has been added to array, write the array to Firebase
+        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+    }
+};
+
+// Writes all addresses in the the "address" array to the right side of the page
 function writeAddresses() {
     $("#searchDetails").empty();
     mapManager.addresses.forEach(function(object, index){
@@ -98,85 +139,6 @@ function writeAddresses() {
     });
 }
 
-function editAddress(index, object, placelabel, isHome) {
-    mapManager.addresses[index].address = object.results[0].formatted_address;
-    mapManager.addresses[index].label = placelabel;
-    mapManager.addresses[index].lat = object.results[0].geometry.location.lat;
-    mapManager.addresses[index].long =object.results[0].geometry.location.lng;
-    if (isHome) {
-        let removed = mapManager.addresses.splice(index, 1);
-        mapManager.addresses.unshift(removed[0]);
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
-    }
-    else {
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
-    }
-};
-
-
-// This function initializes the page - if there is address data in Firebase, it's written to
-// the page. Else, a blank address array is written to firebase.
-
-
-// function initializePage() {
-
-//     database.ref('addresses').once('value').then(function(snapshot){
-//         if (snapshot.val() !== undefined) {
-//             writeAddresses();
-//             mapManager.addresses = JSON.parse(snapshot.val())
-//         }
-//         else {
-//             database.ref().set({addresses: "[]"});
-//             mapManager.addresses = [];
-//         }
-//     });    
-// }
-// This function sets the global mapManager.addresses variable equal to the array passed as an argument
-// function pullInAddresses(array) {
-//     mapManager.addresses = array;
-// };
-
-// Takes the result from the Google Maps Geocoder API and stores it in Firebase
-
-function storeAddress(object, placelabel, isHome) {
-    
-    // If the user has selected the "Home" checkbox, this is added to the BEGINNING of the array
-    if (isHome) {
-        mapManager.addresses.unshift({
-            address: object.results[0].formatted_address,
-            label: placelabel,
-            lat: object.results[0].geometry.location.lat,
-            long: object.results[0].geometry.location.lng
-        });
-        // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
-    }
-    // Else it's added to the END of the Array
-    else {
-        mapManager.addresses.push({
-            address: object.results[0].formatted_address,
-            label: placelabel,
-            lat: object.results[0].geometry.location.lat,
-            long: object.results[0].geometry.location.lng
-        });
-        // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
-    }
-    // Write all addresses to the page
-    // writeAddresses();
-};
-
-// function testStorage() {
-//     // database.ref().set({addresses: "test123"});
-//     let something;
-//     database.ref('addresses').once('value').then(function(snapshot){
-//         something = snapshot.val();
-//         console.log(something + "something")
-//         console.log(snapshot.val() + "val");
-//     });
-//     console.log(something + "something outside");
-// };
-
 // ---------------EVENT LISTENERS-----------------
 
 // When the user clicks the submit button, the saveAddress function is passed the values for
@@ -190,14 +152,15 @@ $("#submitAddress").click(function() {
     $('#isHome').prop('checked', false);
 });
 
-
 // This both initializes the page AND updates the application when a new address is added to Firebase
 database.ref('addresses').on("value", function(snapshot) {
-    let array = JSON.parse(snapshot.val());
     if (snapshot.val() !== null) {
-        console.log(array);
-        mapManager.addresses = array;
-        writeAddresses();
+        if (user) {
+            const addresses = database.ref('users').child(`${user.uid}`).val().addresses;
+            console.log(addresses);
+            mapManager.addresses = addresses;
+            writeAddresses();
+        }
     }
   }, function(errorObject) {
     console.log("Failure: " + errorObject.code)
@@ -225,44 +188,25 @@ $("#editButton").click(function() {
     $("#addressIndex").val('');
 });
 
+function init() {
+    // --------GOOGLE ADDRESS AUTOCOMPLETE FUNCTIONALITY BELOW--------
+    
+    // This example displays an address form, using the autocomplete feature
+    // of the Google Places API to help users fill in the information.
 
-// -----------------RUN ON PAGELOAD----------------
-// initializePage();
-
-// --------GOOGLE ADDRESS AUTOCOMPLETE FUNCTIONALITY BELOW--------
-
-// This example displays an address form, using the autocomplete feature
-// of the Google Places API to help users fill in the information.
-
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-var placeSearch, autocomplete;
-var componentForm = {
-    street_number: 'short_name',
-    route: 'long_name',
-    locality: 'long_name',
-    administrative_area_level_1: 'short_name',
-    country: 'long_name',
-    postal_code: 'short_name'
-};
-
-function initAutocomplete() {
     // Create the autocomplete object, restricting the search to geographical
     // location types.
+    const autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */ (document.getElementById('autocomplete')),
+        { types: ['geocode'] }
+    );
 
-    autocomplete = new google.maps.places.Autocomplete(
-        /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-        {types: ['geocode']});
-
-    autocomplete2 = new google.maps.places.Autocomplete(
-        /** @type {!HTMLInputElement} */(document.getElementById('autocompleteEdit')),
-        {types: ['geocode']});
-
-    // When the user selects an address from the dropdown, populate the address
-    // fields in the form.
-    // autocomplete.addListener('place_changed', fillInAddress);
+    const autocompleteEdit = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */ (document.getElementById(
+        'autocompleteEdit'
+        )),
+        { types: ['geocode'] }
+    );
 
     database.ref('addresses').once('value', function(snapshot) {
         // Sets what home should be - an existing home, or Austin if none
@@ -271,42 +215,3 @@ function initAutocomplete() {
         mapManager.initMap();
     });
 }
-
-// function fillInAddress() {
-//     // Get the place details from the autocomplete object.
-//     var place = autocomplete.getPlace();
-
-//     for (var component in componentForm) {
-//         document.getElementById(component).value = '';
-//         document.getElementById(component).disabled = false;
-//     }
-
-//     // Get each component of the address from the place details
-//     // and fill the corresponding field on the form.
-//     for (var i = 0; i < place.address_components.length; i++) {
-//         var addressType = place.address_components[i].types[0];
-//         if (componentForm[addressType]) {
-//         var val = place.address_components[i][componentForm[addressType]];
-//         document.getElementById(addressType).value = val;
-//         }
-//     }
-// }
-
-// Bias the autocomplete object to the user's geographical location,
-// as supplied by the browser's 'navigator.geolocation' object.
-// function geolocate() {
-//     if (navigator.geolocation) {
-//         navigator.geolocation.getCurrentPosition(function(position) {
-//         var geolocation = {
-//             lat: position.coords.latitude,
-//             lng: position.coords.longitude
-//         };
-//         var circle = new google.maps.Circle({
-//             center: geolocation,
-//             radius: position.coords.accuracy
-//         });
-//         autocomplete.setBounds(circle.getBounds());
-//         });
-//     }
-// }
-
