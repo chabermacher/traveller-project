@@ -38,7 +38,10 @@ function saveAddress(addressString, label, isHome, isEdit, isEditIndex) {
             storeAddress(response, label, isHome);
         }
     }).then(function() {
-        mapManager.displayPins();
+        mapManager
+            .clearPins()
+            .setPins()
+            .displayPins(mapManager.map);
     });
 };
 
@@ -57,7 +60,7 @@ function writeAddresses() {
             icon = "place";
         }
         $("#searchDetails").append(`
-            <li data="${index}">
+            <li data-target="${index}">
                 <div class="collapsible-header address-drilldown">
                     <div>
                         <i class="material-icons">${icon}</i>${object.label}
@@ -114,6 +117,8 @@ function editAddress(index, object, placelabel, isHome) {
     if (isHome) {
         let removed = mapManager.addresses.splice(index, 1);
         mapManager.addresses.unshift(removed[0]);
+        // Because of how the map is initialized, this does not currently work
+        // mapManager.setHome();
         database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
     }
     else {
@@ -276,11 +281,12 @@ function initAutocomplete() {
     // fields in the form.
     // autocomplete.addListener('place_changed', fillInAddress);
 
-    database.ref('addresses').once('value', function(snapshot) {
-        // Sets what home should be - an existing home, or Austin if none
-        mapManager.setHome(snapshot);
-        // Calls the function to initialize the map
-        mapManager.initMap();
+    // Sets home and initializes map
+    // This listener is not a good solution and is only here so the map and home location
+    // can be initialized once data is loaded from Firebase. Without it, the event listener
+    // on initial DB load may not have completed yet, resulting in an empty local array
+    database.ref().once('value', function(snapshot) {
+        mapManager.setHome(snapshot).initMap();
     });
 }
 
