@@ -1,14 +1,9 @@
 html {
 	background: linear-gradient(to bottom, #dcebff, white);
-	
+	height: 100%;
 }
 
-img {
-	height: 25px;
-	
-}
-
-#tiremarks {
+.tiremarks {
 	height: 25px;
 	
 }
@@ -18,7 +13,13 @@ body {
 	font-size: 16pt;
 	box-sizing: border-box;
 }
-h1, h2, h3 {
+
+h1 {
+	text-align: center;
+	font-family: 'Advent Pro', sans-serif;
+} 
+
+h2, h3 {
 	text-align: center;
 	font-family: 'Libre Franklin', sans-serif;
 }
