@@ -79,7 +79,7 @@ function writeAddresses() {
                   <div class="collapsible-body">
                       <span>${address}</span>
 
-                        <div class="nearby"><button data-target="nearby-${index}" class="btn modal-trigger">What's Nearby?</button></div>
+                        <div class="nearbyRight"><button data-target="nearby-${index}" class="btn modal-trigger">What's Nearby?</button></div>
 
                         <div id="nearby-${index}" class="modal bottom-sheet">
                           <div class="modal-content nearby">
