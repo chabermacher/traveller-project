@@ -95,11 +95,11 @@ function writeAddresses() {
               </li>
 
             `);
-        });
-        // Add the travel time for each non-home address (from home to the address)
+            // Add the travel time for each non-home address (from home to the address)
             if (index !== 0) {
                 travelTime.getTime(mapManager.addresses[0].lat, mapManager.addresses[0].long, object.lat, object.long, index)
             }
+        });
 
         // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
         $('.modal').modal();
