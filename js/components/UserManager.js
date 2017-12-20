@@ -1,16 +1,10 @@
 class UserManager {
   constructor() {
-    this.name = '';
-    this.email = '';
-    this.uid = '';
+    this.user = {};
   }
   addUserToLocalState() {
     // Add user data to local state
-    const user = firebase.auth().currentUser;
-    if (user != null) {
-      this.email = user.email;
-      this.uid = user.uid;
-    }
+    this.user = firebase.auth().currentUser;
   }
   validateEmail() {
     if (
@@ -73,9 +67,9 @@ class UserManager {
         firebase
           .database()
           .ref('users')
-          .child(`${this.uid}`)
+          .child(`${this.user.uid}`)
           .set({
-            email: this.email
+            email: this.user.email
           });
         $('#signup-modal').modal('close');
         this.signUserIn();
