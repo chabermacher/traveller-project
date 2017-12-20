@@ -1,14 +1,28 @@
 html {
-	background: linear-gradient(to bottom, #dcebff, white);
 	height: 100%;
+}
+
+#wind {
+	height: 35px;
+	
 }
 
 body {
 	font-family: 'Libre Franklin', sans-serif;
 	font-size: 16pt;
 	box-sizing: border-box;
+	height: 100%;
+	background: linear-gradient(to bottom, #dcebff, white);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
-h1, h2, h3 {
+
+h1 {
+	text-align: center;
+	font-family: 'Advent Pro', sans-serif;
+} 
+
+h2, h3 {
 	text-align: center;
 	font-family: 'Libre Franklin', sans-serif;
 }
@@ -18,13 +32,15 @@ h1, h2, h3 {
 	display: flex;
 	justify-content: space-between;
 	background-color: #dcebff;
+	background-color:rgba(0, 0, 0, 0); /*transparent box but not text*/
 	color: #313e4e;
 	font-family: 'Libre Franklin', sans-serif;
-	padding: 20px;
+	padding: 10px;
 	font-weight: bold;
+
 }
 #pageHeader h1 {
-	font-size: 1.5em;
+	font-size: 2.5em;
 	margin: 0;
 }
 #header-right {
@@ -32,7 +48,7 @@ h1, h2, h3 {
 	width: 500px;
 }
 .collapsible-body {
-	background: orange;
+	background: #d2dceb;
 }
 .address-drilldown {
 	justify-content: space-between;
@@ -48,9 +64,10 @@ h1, h2, h3 {
 	font-size: 24px;
 	margin-top: 10px;
 	padding: 12px;
+	text-align: right;
 }
 
-.smalleditbutton {
+.smalleditbutton, .deletebutton {
 	padding: 0 8px;
 	height: 25px;
 	line-height: 25px;
@@ -58,4 +75,56 @@ h1, h2, h3 {
 
 #invisibleIndexField {
 	display: none;
+}
+
+.nearbyRight {
+	margin: 10px 0;
+}
+
+.nomargin {
+	margin-right: 0 !important;
+	vertical-align: middle;
+}
+
+.travelTime {
+    font-size: medium;
+}
+
+#map {
+	border: 1px solid #999;
+}
+
+#nearbycss {
+	clear: both;
+	border-bottom: 1px solid black;
+	padding-bottom: 20px;
+	height: 260px;
+    margin-bottom: 6px;
+}
+
+hr {
+	height: 2px;
+	clear: both;
+	padding-top: 3px;
+
+}
+
+.nearbypic {
+	display: inline-block;
+	float: left;
+}
+
+.nearbytext {
+	font-size: 20px;
+	padding-left: 3px;
+	left: 10px;
+    position: relative;
+    top: 35px;
+    padding-bottom: 10px;
+	
+}
+
+h4 {
+	text-decoration: underline;
+	font-size: 25px;
 }
