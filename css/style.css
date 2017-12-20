@@ -59,3 +59,7 @@ h1, h2, h3 {
 #invisibleIndexField {
 	display: none;
 }
+
+.nearby {
+	margin: 10px 0;
+}
