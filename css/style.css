@@ -1,5 +1,4 @@
 html {
-	background: linear-gradient(to bottom, #dcebff, white);
 	height: 100%;
 }
 
@@ -12,6 +11,10 @@ body {
 	font-family: 'Libre Franklin', sans-serif;
 	font-size: 16pt;
 	box-sizing: border-box;
+	height: 100%;
+	background: linear-gradient(to bottom, #dcebff, white);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 h1 {
