@@ -38,7 +38,10 @@ function saveAddress(addressString, label, isHome, isEdit, isEditIndex) {
             storeAddress(response, label, isHome);
         }
     }).then(function() {
-        mapManager.displayPins();
+        mapManager
+            .clearPins()
+            .setPins()
+            .displayPins(mapManager.map);
     });
 };
 
@@ -57,13 +60,19 @@ function writeAddresses() {
             icon = "place";
         }
         $("#searchDetails").append(`
-            <li data="${index}">
+            <li data-target="${index}">
                 <div class="collapsible-header address-drilldown">
                     <div>
                         <i class="material-icons">${icon}</i>${object.label}
                     </div>
                     <div>
+                        <span class="travelTime" id="travel${index}"></span>
+                    </div>
+                    <div>
                         <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
+                    </div>
+                    <div>
+                        <a data="${index}" class="waves-effect waves-light btn modal-trigger red deletebutton">Delete</a>
                     </div>
                 </div>
                 <div class="collapsible-body">
@@ -85,6 +94,11 @@ function writeAddresses() {
             </li>
 
         `);
+        // Add the travel time for each non-home address (from home to the address)
+            if (index !== 0) {
+                travelTime.getTime(mapManager.addresses[0].lat, mapManager.addresses[0].long, object.lat, object.long, index)
+            }
+
         // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
         $('.modal').modal();
         
@@ -106,6 +120,8 @@ function editAddress(index, object, placelabel, isHome) {
     if (isHome) {
         let removed = mapManager.addresses.splice(index, 1);
         mapManager.addresses.unshift(removed[0]);
+        // Because of how the map is initialized, this does not currently work
+        // mapManager.setHome();
         database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
     }
     else {
@@ -166,6 +182,12 @@ function storeAddress(object, placelabel, isHome) {
     // writeAddresses();
 };
 
+function deleteAddress(index) {
+    mapManager.addresses.splice(index, 1);
+    database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+
+}
+
 // function testStorage() {
 //     // database.ref().set({addresses: "test123"});
 //     let something;
@@ -199,6 +221,10 @@ database.ref('addresses').on("value", function(snapshot) {
         mapManager.addresses = array;
         writeAddresses();
     }
+    else {
+        database.ref().set({addresses: "[]"});
+        mapManager.addresses = [];
+        }
   }, function(errorObject) {
     console.log("Failure: " + errorObject.code)
   });
@@ -214,6 +240,11 @@ $("body").on("click", ".smalleditbutton", function() {
     else {
         $("#isHomeEdit").prop('checked', false);
     }
+});
+
+// Delete buttons
+$("body").on("click", ".deletebutton", function() {
+    deleteAddress($(this).attr("data"));
 });
 
 // Submit button for the edit panel - submits the changes and clears out the fields
@@ -264,11 +295,12 @@ function initAutocomplete() {
     // fields in the form.
     // autocomplete.addListener('place_changed', fillInAddress);
 
-    database.ref('addresses').once('value', function(snapshot) {
-        // Sets what home should be - an existing home, or Austin if none
-        mapManager.setHome(snapshot);
-        // Calls the function to initialize the map
-        mapManager.initMap();
+    // Sets home and initializes map
+    // This listener is not a good solution and is only here so the map and home location
+    // can be initialized once data is loaded from Firebase. Without it, the event listener
+    // on initial DB load may not have completed yet, resulting in an empty local array
+    database.ref().once('value', function(snapshot) {
+        mapManager.setHome(snapshot).initMap();
     });
 }
 

@@ -23,4 +23,9 @@ $('#login-form').submit(function(e) {
 
 $('#user-login').on('click', '#logout', function() {
   userManager.signUserOut();
-})
+});
+
+$('#searchDetails').on('click', 'li', function() {
+  const idx = $(this).data('target');
+  mapManager.moveToLocation(mapManager.addresses[idx]);
+});
