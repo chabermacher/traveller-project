@@ -3,6 +3,7 @@ class MapManager {
     this.map = {};
     this.home = {};
     this.addresses = [];
+    this.pins = [];
   }
   initMap() {
     // Create a map object and specify the DOM element for display.
@@ -10,9 +11,18 @@ class MapManager {
       center: this.home,
       zoom: 13
     });
+    // Initialize pins from existing addresses
+    this.setPins();
     
-    // Do something only the first time the map is loaded
-    google.maps.event.addListenerOnce(this.map, 'tilesloaded', this.displayPins());
+    // Display pins on the map once it has fully loaded
+    google.maps.event.addListenerOnce(this.map, 'tilesloaded', this.displayPins(this.map));
+  }
+  moveToLocation(address) {
+    const center = new google.maps.LatLng({
+      lat: address.lat, 
+      lng: address.long
+    });
+    this.map.panTo(center);
   }
   // Sets the home coordinates to the stored home address, or general Austin if none
   setHome(snapshot) {
@@ -32,21 +42,31 @@ class MapManager {
     // Sets home coordinates as Google LatLng object which is later used in 
     // initMap to center it on that location
     this.home = new google.maps.LatLng(homeCoords);
+    return this;
   }
-  displayPins() {
-    // Only displays pins if addresses exist in local array
+  setPins() {
+    // Only set pins if addresses exist in local array
     if (this.addresses.length > 0) {
       this.addresses.map(address => {
         const latLang = new google.maps.LatLng({
           lat: address.lat,
           lng: address.long
         });
-        const marker = new google.maps.Marker({
+        this.pins.push(new google.maps.Marker({
           position: latLang
-        });
-        marker.setMap(this.map);
+        }));
       });
     }
+    return this;
+  }
+  displayPins(map) {
+    this.pins.map(pin => pin.setMap(map));
+    return this;
+  }
+  clearPins() {
+    this.displayPins(null);
+    this.pins = [];
+    return this;
   }
 }
 

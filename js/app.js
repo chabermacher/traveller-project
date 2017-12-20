@@ -41,3 +41,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     console.log('no one is logged in');
   }
 });
+$('#searchDetails').on('click', 'li', function() {
+  const idx = $(this).data('target');
+  mapManager.moveToLocation(mapManager.addresses[idx]);
+});

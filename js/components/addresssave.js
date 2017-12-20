@@ -39,7 +39,10 @@ function saveAddress(addressString, label, isHome, isEdit, isEditIndex) {
             storeAddress(response, label, isHome);
         }
     }).then(function() {
-        mapManager.displayPins();
+        mapManager
+            .clearPins()
+            .setPins()
+            .displayPins(mapManager.map);
     });
 };
 
@@ -51,10 +54,10 @@ function editAddress(index, object, placelabel, isHome) {
     if (isHome) {
         let removed = mapManager.addresses.splice(index, 1);
         mapManager.addresses.unshift(removed[0]);
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+        database.ref().set({"addresses": mapManager.addresses});
     }
     else {
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+        database.ref().set({"addresses": mapManager.addresses});
     }
 };
 
@@ -69,7 +72,7 @@ function storeAddress(object, placelabel, isHome) {
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+        database.ref().set({"addresses": mapManager.addresses});
     }
     // Else it's added to the END of the Array
     else {
@@ -80,13 +83,14 @@ function storeAddress(object, placelabel, isHome) {
             long: object.results[0].geometry.location.lng
         });
         // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+        database.ref().set({"addresses": mapManager.addresses});
     }
 };
 
 // Writes all addresses in the the "address" array to the right side of the page
 function writeAddresses() {
     $("#searchDetails").empty();
+    console.log(mapManager.addresses);
     mapManager.addresses.forEach(function(object, index){
         let icon;
         let address = object.address.replace(",",",<br>");
@@ -98,10 +102,13 @@ function writeAddresses() {
             icon = "place";
         }
         $("#searchDetails").append(`
-            <li data="${index}">
+            <li data-target="${index}">
                 <div class="collapsible-header address-drilldown">
                     <div>
                         <i class="material-icons">${icon}</i>${object.label}
+                    </div>
+                    <div>
+                        <span class="travelTime" id="travel${index}"></span>
                     </div>
                     <div>
                         <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
@@ -126,6 +133,11 @@ function writeAddresses() {
             </li>
 
         `);
+        // Add the travel time for each non-home address (from home to the address)
+            if (index !== 0) {
+                travelTime.getTime(mapManager.addresses[0].lat, mapManager.addresses[0].long, object.lat, object.long, index)
+            }
+
         // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
         $('.modal').modal();
         
@@ -162,6 +174,10 @@ database.ref('addresses').on("value", function(snapshot) {
             writeAddresses();
         }
     }
+    else {
+        database.ref().set({addresses: "[]"});
+        mapManager.addresses = [];
+        }
   }, function(errorObject) {
     console.log("Failure: " + errorObject.code)
   });
@@ -208,10 +224,12 @@ function init() {
         { types: ['geocode'] }
     );
 
-    database.ref('addresses').once('value', function(snapshot) {
-        // Sets what home should be - an existing home, or Austin if none
-        mapManager.setHome(snapshot);
-        // Calls the function to initialize the map
-        mapManager.initMap();
+    // Sets home and initializes map
+    // This listener is not a good solution and is only here so the map and home location
+    // can be initialized once data is loaded from Firebase. Without it, the event listener
+    // on initial DB load may not have completed yet, resulting in an empty local array
+    database.ref().once('value', function(snapshot) {
+        console.log(snapshot.val());
+        mapManager.setHome(snapshot).initMap();
     });
 }
