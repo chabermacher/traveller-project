@@ -181,7 +181,10 @@ function storeAddress(object, placelabel, isHome) {
 function deleteAddress(index) {
     mapManager.addresses.splice(index, 1);
     database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
-
+    mapManager
+        .clearPins()
+        .setPins()
+        .displayPins(mapManager.map);
 }
 
 // function testStorage() {
