@@ -19,7 +19,7 @@ var APIKey = "166a433c57516f51dfab1f7edaed8413";
         console.log(response);
 
         // Transfer content to HTML
-        $("#weather").html(response.name + " " + Math.round(response.main.temp) + "&deg; F" + " " + response.weather[0].description);
+        $("#weather").html(response.name + " " + Math.round(response.main.temp) + "&deg; F<br>" + " " + response.weather[0].description);
         $('#weather').css('textTransform', 'capitalize')
                 
       });

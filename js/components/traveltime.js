@@ -11,7 +11,12 @@ class TravelTime {
             travelMode: "DRIVING"
         };
         getDirections.route(requestObject, function(response){
-            $("#travel" + index).text(response.routes[0].legs[0].duration.text);
+            $("#travel" + index).html(`
+                <div class='chip'>
+                <i class="tiny material-icons nomargin">airport_shuttle</i>
+                    ${response.routes[0].legs[0].duration.text}
+                </div>
+                `);
         });
     };
 
