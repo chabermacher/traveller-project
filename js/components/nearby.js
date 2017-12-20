@@ -22,12 +22,12 @@ function nearby(address) {
     for (i = 0; i < 5; i++) {
 
       // Pushing information into the nearby modal
-      $(".nearby").append("<div><h4>" + response.nearby_restaurants[i].restaurant.name + "</h4>" +
-                               "<img src='" + response.nearby_restaurants[i].restaurant.thumb + "'/>" +
-                               "<p>Address: " + response.nearby_restaurants[i].restaurant.location.address + "</p>" +
-                               "<p>Cuisine: " + response.nearby_restaurants[i].restaurant.cuisines + "</p>" +
-                               "<p>Price Range (1-5): " + response.nearby_restaurants[i].restaurant.price_range + "</p>" +
-                               "<p>User Rating: " + response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating + "</p></div>")
+      $(".nearby").append("<div id='nearbycss'><h4>" + response.nearby_restaurants[i].restaurant.name + "</h4>" +
+                               "<img class='nearbypic' src='" + response.nearby_restaurants[i].restaurant.thumb + "'/>" +
+                               "<p class='nearbytext'>Address: " + response.nearby_restaurants[i].restaurant.location.address + "</p>" +
+                               "<p class='nearbytext'>Cuisine: " + response.nearby_restaurants[i].restaurant.cuisines + "</p>" +
+                               "<p class='nearbytext'>Price Range: " + '$'.repeat(response.nearby_restaurants[i].restaurant.price_range) + "</p>" +
+                               "<p class='nearbytext'>User Rating: " + response.nearby_restaurants[i].restaurant.user_rating.aggregate_rating + "</p></div>")
       
 
       // Debugging
