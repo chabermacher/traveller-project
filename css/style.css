@@ -48,7 +48,7 @@ h2, h3 {
 	width: 500px;
 }
 .collapsible-body {
-	background: orange;
+	background: #d2dceb;
 }
 .address-drilldown {
 	justify-content: space-between;
@@ -115,14 +115,16 @@ hr {
 }
 
 .nearbytext {
-	font-size: 25px;
+	font-size: 20px;
 	padding-left: 3px;
 	left: 10px;
     position: relative;
-    top: 20px;
+    top: 35px;
+    padding-bottom: 10px;
 	
 }
 
 h4 {
 	text-decoration: underline;
+	font-size: 25px;
 }
