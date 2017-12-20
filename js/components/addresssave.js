@@ -48,52 +48,54 @@ function saveAddress(addressString, label, isHome, isEdit, isEditIndex) {
 // Writes all addresses in the the "address" array to the right side of the page
 
 function writeAddresses() {
-    $("#searchDetails").empty();
-    mapManager.addresses.forEach(function(object, index){
-        let icon;
-        let address = object.address.replace(",",",<br>");
-        address = address.replace(", USA", "");
-        if (index === 0) {
-            icon = "home";
-        }
-        else {
-            icon = "place";
-        }
-        $("#searchDetails").append(`
-            <li data-target="${index}">
-                <div class="collapsible-header address-drilldown">
-                    <div>
-                        <i class="material-icons">${icon}</i>${object.label}
-                    </div>
-                    <div>
-                        <span class="travelTime" id="travel${index}"></span>
-                    </div>
-                    <div>
-                        <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
-                    </div>
-                    <div>
-                        <a data="${index}" class="waves-effect waves-light btn modal-trigger red deletebutton">Delete</a>
-                    </div>
-                </div>
-                <div class="collapsible-body">
-                    <span>${address}</span>
-                                         
-                      <div class="nearbyRight"><button data-target="nearby-${index}" class="btn modal-trigger">What's Nearby?</button></div>
-                      
-                      <div id="nearby-${index}" class="modal bottom-sheet">
-                        <div class="modal-content nearby">
-                          <h4>Modal Header</h4>
-                          <p>A bunch of text</p>
-                        </div>
-                        <div class="modal-footer">
-                          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                        </div>
+    if (mapManager.addresses.length > 0) {
+        $("#searchDetails").empty();
+        mapManager.addresses.forEach(function(object, index){
+          let icon;
+          let address = object.address.replace(",",",<br>");
+          address = address.replace(", USA", "");
+          if (index === 0) {
+              icon = "home";
+          }
+          else {
+              icon = "place";
+          }
+          $("#searchDetails").append(`
+              <li data-target="${index}">
+                  <div class="collapsible-header address-drilldown">
+                      <div>
+                          <i class="material-icons">${icon}</i>${object.label}
                       </div>
-                                          
-                </div>
-            </li>
+                      <div>
+                          <span class="travelTime" id="travel${index}"></span>
+                      </div>
+                      <div>
+                          <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
+                      </div>
+                      <div>
+                          <a data="${index}" class="waves-effect waves-light btn modal-trigger red deletebutton">Delete</a>
+                      </div>
+                  </div>
+                  <div class="collapsible-body">
+                      <span>${address}</span>
 
-        `);
+                        <div class="nearby"><button data-target="nearby-${index}" class="btn modal-trigger">What's Nearby?</button></div>
+
+                        <div id="nearby-${index}" class="modal bottom-sheet">
+                          <div class="modal-content nearby">
+                            <h4>Modal Header</h4>
+                            <p>A bunch of text</p>
+                          </div>
+                          <div>
+                              <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
+                          </div>
+                        </div>
+
+                  </div>
+              </li>
+
+            `);
+        });
         // Add the travel time for each non-home address (from home to the address)
             if (index !== 0) {
                 travelTime.getTime(mapManager.addresses[0].lat, mapManager.addresses[0].long, object.lat, object.long, index)
@@ -101,8 +103,7 @@ function writeAddresses() {
 
         // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
         $('.modal').modal();
-        
-    });
+    }
 
     //Button click function to call nearby.js to grab restaurants and populate modal.
     mapManager.addresses.forEach(function(object, index){

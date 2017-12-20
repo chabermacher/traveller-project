@@ -27,7 +27,8 @@ class MapManager {
   // Sets the home coordinates to the stored home address, or general Austin if none
   setHome(snapshot) {
     let homeCoords = {};
-    if (snapshot.val()) {
+    const dbAddresses = snapshot.child('addresses');
+    if (dbAddresses.exists() && dbAddresses.length > 0) {
       homeCoords = {
         lat: this.addresses[0].lat,
         lng: this.addresses[0].long
@@ -35,8 +36,8 @@ class MapManager {
     }
     else {
       homeCoords = {
-        lat: 30.3074624,
-        lng: -98.0335911
+        lat: 30.285991,
+        lng: -97.7352087
       }
     }
     // Sets home coordinates as Google LatLng object which is later used in 

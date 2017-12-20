@@ -3,12 +3,23 @@ html {
 	height: 100%;
 }
 
+.tiremarks {
+	height: 25px;
+	
+}
+
 body {
 	font-family: 'Libre Franklin', sans-serif;
 	font-size: 16pt;
 	box-sizing: border-box;
 }
-h1, h2, h3 {
+
+h1 {
+	text-align: center;
+	font-family: 'Advent Pro', sans-serif;
+} 
+
+h2, h3 {
 	text-align: center;
 	font-family: 'Libre Franklin', sans-serif;
 }
@@ -18,10 +29,12 @@ h1, h2, h3 {
 	display: flex;
 	justify-content: space-between;
 	background-color: #dcebff;
+	background-color:rgba(0, 0, 0, 0); /*transparent box but not text*/
 	color: #313e4e;
 	font-family: 'Libre Franklin', sans-serif;
-	padding: 20px;
+	padding: 10px;
 	font-weight: bold;
+
 }
 #pageHeader h1 {
 	font-size: 1.5em;
