@@ -68,11 +68,7 @@ function writeAddresses() {
                       </div>
                       <div>
                           <span class="travelTime" id="travel${index}"></span>
-                      </div>
-                      <div>
                           <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
-                      </div>
-                      <div>
                           <a data="${index}" class="waves-effect waves-light btn modal-trigger red deletebutton">Delete</a>
                       </div>
                   </div>
