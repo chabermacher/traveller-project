@@ -86,9 +86,6 @@ function writeAddresses() {
                             <h4>Modal Header</h4>
                             <p>A bunch of text</p>
                           </div>
-                          <div>
-                              <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
-                          </div>
                         </div>
 
                   </div>
