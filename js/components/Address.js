@@ -145,7 +145,8 @@ class AddressManager {
     mapManager
       .clearPins()
       .setPins()
-      .displayPins(mapManager.map);
+      .displayPins(mapManager.map)
+      .moveToLocation(mapManager.addresses[0]);
   }
   getTime(firstLat, firstLong, secondLat, secondLong, index) {
     let getDirections = new google.maps.DirectionsService();
