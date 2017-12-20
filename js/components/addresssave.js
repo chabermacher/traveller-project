@@ -21,8 +21,6 @@ var database = firebase.database();
 // This variable will be updated to match the array in Firebase every time Firebase is updated
 mapManager.addresses = [];
 
-const user = firebase.auth().currentUser;
-
 // ---------------FUNCTIONS-----------------------
 
 // Takes the autocompleted address, makes a call to Google Maps Geocoder API, 
@@ -71,8 +69,6 @@ function storeAddress(object, placelabel, isHome) {
             lat: object.results[0].geometry.location.lat,
             long: object.results[0].geometry.location.lng
         });
-        // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": mapManager.addresses});
     }
     // Else it's added to the END of the Array
     else {
@@ -82,8 +78,12 @@ function storeAddress(object, placelabel, isHome) {
             lat: object.results[0].geometry.location.lat,
             long: object.results[0].geometry.location.lng
         });
-        // Now that new address has been added to array, write the array to Firebase
-        database.ref().set({"addresses": mapManager.addresses});
+    }
+    // Now that new address has been added to array, write the array to Firebase
+    if (user) {
+        database.ref().child(`${userManager.uid}`).set({"addresses": mapManager.addresses});
+    } else {
+        console.log('no user to add addresses to!');
     }
 };
 
@@ -229,7 +229,6 @@ function init() {
     // can be initialized once data is loaded from Firebase. Without it, the event listener
     // on initial DB load may not have completed yet, resulting in an empty local array
     database.ref().once('value', function(snapshot) {
-        console.log(snapshot.val());
         mapManager.setHome(snapshot).initMap();
     });
 }
