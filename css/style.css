@@ -50,7 +50,7 @@ h1, h2, h3 {
 	padding: 12px;
 }
 
-.smalleditbutton {
+.smalleditbutton, .deletebutton {
 	padding: 0 8px;
 	height: 25px;
 	line-height: 25px;

@@ -71,6 +71,9 @@ function writeAddresses() {
                     <div>
                         <a data="${index}" class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
                     </div>
+                    <div>
+                        <a data="${index}" class="waves-effect waves-light btn modal-trigger red deletebutton">Delete</a>
+                    </div>
                 </div>
                 <div class="collapsible-body">
                     <span>${address}</span>
@@ -179,6 +182,12 @@ function storeAddress(object, placelabel, isHome) {
     // writeAddresses();
 };
 
+function deleteAddress(index) {
+    mapManager.addresses.splice(index, 1);
+    database.ref().set({"addresses": JSON.stringify(mapManager.addresses)});
+
+}
+
 // function testStorage() {
 //     // database.ref().set({addresses: "test123"});
 //     let something;
@@ -231,6 +240,11 @@ $("body").on("click", ".smalleditbutton", function() {
     else {
         $("#isHomeEdit").prop('checked', false);
     }
+});
+
+// Delete buttons
+$("body").on("click", ".deletebutton", function() {
+    deleteAddress($(this).attr("data"));
 });
 
 // Submit button for the edit panel - submits the changes and clears out the fields
