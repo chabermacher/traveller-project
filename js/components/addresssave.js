@@ -83,8 +83,6 @@ function writeAddresses() {
 
                         <div id="nearby-${index}" class="modal bottom-sheet">
                           <div class="modal-content nearby">
-                            <h4>Modal Header</h4>
-                            <p>A bunch of text</p>
                           </div>
                         </div>
 
