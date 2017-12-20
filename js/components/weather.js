@@ -13,12 +13,9 @@ $.ajax({
 }).done(function(response) {
   // Transfer content to HTML
   $('#weather').html(
-    response.name +
-      ' ' +
-      Math.round(response.main.temp) +
-      '&deg; F<br>' +
-      ' ' +
+    `${response.name} ${Math.round(response.main.temp)} &deg; F, ${
       response.weather[0].description
+    }`
   );
   $('#weather').css('textTransform', 'capitalize');
 });
