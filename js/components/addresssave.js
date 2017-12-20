@@ -201,10 +201,15 @@ function deleteAddress(index) {
 // the "isEdit" BOOLEAN that is only true when the user is editing an existing address, and
 // the INDEX of the existing address, if an address is being edited
 $("#submitAddress").click(function() {
-    saveAddress($("#autocomplete").val(), $("#placelabel").val(), $('#isHome').prop('checked'), false, -1);
-    $("#autocomplete").val('');
-    $("#placelabel").val('');
-    $('#isHome').prop('checked', false);
+    if ($("#autocomplete").val() !== "" && $("#placelabel").val() !== "") {
+        saveAddress($("#autocomplete").val(), $("#placelabel").val(), $('#isHome').prop('checked'), false, -1);
+        $("#autocomplete").val('');
+        $("#placelabel").val('');
+        $('#isHome').prop('checked', false);
+    }
+    else {
+        $('#modal99').modal('open');
+    }
 });
 
 
@@ -244,11 +249,16 @@ $("body").on("click", ".deletebutton", function() {
 
 // Submit button for the edit panel - submits the changes and clears out the fields
 $("#editButton").click(function() {
-    saveAddress($("#autocompleteEdit").val(), $("#placelabelEdit").val(), $('#isHomeEdit').prop('checked'), true, $("#addressIndex").val());
-    $("#autocompleteEdit").val('');
-    $("#placelabelEdit").val('');
-    $('#isHomeEdit').prop('checked', false);
-    $("#addressIndex").val('');
+    if ($("#autocompleteEdit").val() !== "" && $("#placelabelEdit").val() !== ""){
+        saveAddress($("#autocompleteEdit").val(), $("#placelabelEdit").val(), $('#isHomeEdit').prop('checked'), true, $("#addressIndex").val());
+        $("#autocompleteEdit").val('');
+        $("#placelabelEdit").val('');
+        $('#isHomeEdit').prop('checked', false);
+        $("#addressIndex").val('');
+    }
+    else {
+        $('#modal99').modal('open');
+    }
 });
 
 
