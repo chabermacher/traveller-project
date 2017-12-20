@@ -79,3 +79,38 @@ h2, h3 {
 .nearbyRight {
 	margin: 10px 0;
 }
+
+#nearbycss {
+	clear: both;
+	border-bottom: 1px solid black;
+	padding-bottom: 20px;
+	height: 260px;
+    margin-bottom: 6px;
+}
+
+hr {
+	height: 2px;
+	clear: both;
+	padding-top: 3px;
+
+}
+
+.nearbypic {
+	display: inline-block;
+	float: left;
+}
+
+.nearbytext {
+	font-size: 25px;
+	padding-left: 3px;
+	left: 10px;
+    position: relative;
+    top: 20px;
+	
+}
+
+h4 {
+	text-decoration: underline;
+}
+
+
