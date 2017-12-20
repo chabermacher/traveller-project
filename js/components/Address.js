@@ -91,7 +91,14 @@ class AddressManager {
             </div>
             <div class="collapsible-body">
               <div class="address-container">
-                <div>${address}</div>
+                <div class="address">
+                  <div>${address}</div>
+                  <div>
+                  <div class="nearbyRight"><button data-target="nearby-${
+                    index
+                  }" class="btn modal-trigger">What's Nearby?</button></div>
+                  </div>
+                </div>
                 <div id="nearby-${index}" class="modal bottom-sheet">
                   <div class="modal-content nearby">
                   </div>
@@ -103,11 +110,6 @@ class AddressManager {
                       class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
                     <a data-target="${index}" 
                       class="waves-effect waves-light btn modal-trigger red deletebutton">Delete</a>
-                  </div>
-                  <div>
-                    <div class="nearbyRight"><button data-target="nearby-${
-                      index
-                    }" class="btn modal-trigger">What's Nearby?</button></div>
                   </div>
                 </div>
               </div>
@@ -185,27 +187,25 @@ class AddressManager {
 
       for (let i = 0; i < 5; i++) {
         // Pushing information into the nearby modal
-        $('.nearby').append(
-          "<div id='nearbycss'><h4>" +
-            response.nearby_restaurants[i].restaurant.name +
-            '</h4>' +
-            "<img class='nearbypic' src='" +
-            response.nearby_restaurants[i].restaurant.thumb +
-            "'/>" +
-            "<p class='nearbytext'>Address: " +
-            response.nearby_restaurants[i].restaurant.location.address +
-            '</p>' +
-            "<p class='nearbytext'>Cuisine: " +
-            response.nearby_restaurants[i].restaurant.cuisines +
-            '</p>' +
-            "<p class='nearbytext'>Price Range: " +
-            '$'.repeat(response.nearby_restaurants[i].restaurant.price_range) +
-            '</p>' +
-            "<p class='nearbytext'>User Rating: " +
-            response.nearby_restaurants[i].restaurant.user_rating
-              .aggregate_rating +
-            '</p></div>'
-        );
+        $('.nearby').append(`
+          <div id="nearbycss">
+            <h4>${response.nearby_restaurants[i].restaurant.name}</h4>
+            <img class="nearbypic" src="${
+              response.nearby_restaurants[i].restaurant.thumb
+            }"/>
+            <p class='nearbytext'>Address: ${
+              response.nearby_restaurants[i].restaurant.location.address
+            }</p>
+            <p class='nearbytext'>Cuisine: ${
+              response.nearby_restaurants[i].restaurant.cuisines
+            }</p>
+            <p class='nearbytext'>Price Range: ${'$'.repeat(
+              response.nearby_restaurants[i].restaurant.price_range
+            )}</p>
+            <p class='nearbytext'>User Rating: ${
+              response.nearby_restaurants[i].restaurant.user_rating
+                .aggregate_rating
+            }</p></div>`);
       }
     });
   }

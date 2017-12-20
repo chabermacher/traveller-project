@@ -76,7 +76,7 @@ $('#submitAddress').click(function() {
 });
 
 $('#searchDetails').on('click', 'li', function() {
-  const idx = $(this).data('target');
+  const idx = $(this).data('target-target');
   mapManager.moveToLocation(mapManager.addresses[idx]);
 });
 
@@ -85,9 +85,11 @@ $('body').on('click', '.smalleditbutton', function() {
   $('#autocompleteEdit').val(
     mapManager.addresses[$(this).attr('data-target')].address
   );
-  $('#placelabelEdit').val(mapManager.addresses[$(this).attr('data')].label);
-  $('#addressIndex').val($(this).attr('data'));
-  if ($(this).attr('data') == 0) {
+  $('#placelabelEdit').val(
+    mapManager.addresses[$(this).attr('data-target')].label
+  );
+  $('#addressIndex').val($(this).attr('data-target'));
+  if ($(this).attr('data-target') == 0) {
     $('#isHomeEdit').prop('checked', true);
   } else {
     $('#isHomeEdit').prop('checked', false);
