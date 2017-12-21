@@ -33,7 +33,6 @@ class UserManager {
       .auth()
       .signInWithEmailAndPassword(this.email, this.password)
       .then(function() {
-        console.log('signed in user');
         // Close the modal
         $('#login-modal').modal('close');
         // Replace login buttons with Sign Out button
@@ -47,7 +46,6 @@ class UserManager {
       });
   }
   signUserOut() {
-    console.log('logging user out');
     firebase
       .auth()
       .signOut()
@@ -55,7 +53,6 @@ class UserManager {
       .catch(() => console.log(error.message));
   }
   createUser() {
-    console.log('creating user');
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.email, this.password)

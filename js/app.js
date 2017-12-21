@@ -4,7 +4,6 @@ const database = firebase.database();
 
 // Handle a new user logging in
 $('#signup-form').submit(function(e) {
-  console.log('sign up form submitted');
   e.preventDefault();
   userManager.email = $('#signup-email')
     .val()
@@ -54,7 +53,6 @@ const writeAddressesFromDatabase = function(snapshot) {
 database.ref(`users`).on(
   'child_changed',
   function(snapshot) {
-    console.log('child changed');
     writeAddressesFromDatabase(snapshot);
   },
   function(errorObject) {
@@ -76,7 +74,7 @@ $('#submitAddress').click(function() {
 });
 
 $('#searchDetails').on('click', 'li', function() {
-  const idx = $(this).data('target-target');
+  const idx = $(this).data('target');
   mapManager.moveToLocation(mapManager.addresses[idx]);
 });
 
