@@ -88,6 +88,9 @@ class AddressManager {
               <div>
                 <i class="material-icons">${icon}</i>${object.label}
               </div>
+              <div>
+                <span class="travelTime" id="travel${index}"></span>
+              </div>
             </div>
             <div class="collapsible-body">
               <div class="address-container">
@@ -105,7 +108,6 @@ class AddressManager {
                 </div>
                 <div class="controls-container">
                   <div>
-                    <span class="travelTime" id="travel${index}"></span>
                     <a data-target="${index}" 
                       class="waves-effect waves-light btn modal-trigger blue smalleditbutton" href="#modal2">Edit</a>
                     <a data-target="${index}" 
